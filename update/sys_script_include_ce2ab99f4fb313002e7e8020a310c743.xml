@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_175353_thriveinv.ThriveInvoiceUtil</api_name>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>ThriveInvoiceUtil</name>
+        <script><![CDATA[var ThriveInvoiceUtil = Class.create();
+
+ThriveInvoiceUtil.SetTimeInvoiced = function(currentref) {
+	//not using Secure, so ACLs ignored
+	var te = new GlideRecord('task_time_worked');
+	te.addQuery('x_175353_thriveinv_invoiced', false);
+	te.addQuery('task.sys_domain', currentref.sys_domain);
+	te.query();
+	
+	while (te.next()) {
+		te.x_175353_thriveinv_billed_rate = currentref.demo_rate;
+		te.update();
+	}
+	
+	gs.addInfoMessage(gs.getMessage('All non-invoiced Time Worked records have been updated.'));
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-08-13 19:35:01</sys_created_on>
+        <sys_id>ce2ab99f4fb313002e7e8020a310c743</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>ThriveInvoiceUtil</sys_name>
+        <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+        <sys_update_name>sys_script_include_ce2ab99f4fb313002e7e8020a310c743</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-08-13 20:58:09</sys_updated_on>
+    </sys_script_include>
+</record_update>

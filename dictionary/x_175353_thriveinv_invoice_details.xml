@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Invoice Details" max_length="40" name="x_175353_thriveinv_invoice_details" type="collection">
+        <element label="Domain" max_length="32" name="domain" type="domain_id"/>
+        <element label="Invoice" mandatory="true" max_length="32" name="invoice" reference="x_175353_thriveinv_invoices" type="reference"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
+        <index name="index">
+            <element name="domain"/>
+        </index>
+        <index name="index2">
+            <element name="invoice"/>
+        </index>
+        <index name="index3">
+            <element name="sys_class_name"/>
+        </index>
+    </element>
+</database>
