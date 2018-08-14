@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_dictionary action="INSERT_OR_UPDATE" element="x_175353_thriveinv_billed_amount" table="task_time_worked">
+    <sys_dictionary action="INSERT_OR_UPDATE" element="minimum_hours" table="x_175353_thriveinv_work_types">
         <active>true</active>
         <array>false</array>
         <array_denormalized>false</array_denormalized>
@@ -14,7 +14,7 @@
         <choice/>
         <choice_field/>
         <choice_table/>
-        <column_label>Billed Amount</column_label>
+        <column_label>Minimum Hours</column_label>
         <comments/>
         <create_roles/>
         <default_value/>
@@ -27,18 +27,18 @@
         <dynamic_creation_script/>
         <dynamic_default_value/>
         <dynamic_ref_qual/>
-        <element>x_175353_thriveinv_billed_amount</element>
+        <element>minimum_hours</element>
         <element_reference>false</element_reference>
         <foreign_database/>
-        <function_definition>glidefunction:multiply(x_175353_thriveinv_billed_rate, divide(time_in_seconds, '3600'))</function_definition>
-        <function_field>true</function_field>
+        <function_definition/>
+        <function_field>false</function_field>
         <internal_type display_value="Decimal">decimal</internal_type>
         <mandatory>false</mandatory>
-        <max_length>20</max_length>
-        <name>task_time_worked</name>
+        <max_length>15</max_length>
+        <name>x_175353_thriveinv_work_types</name>
         <next_element/>
         <primary>false</primary>
-        <read_only>true</read_only>
+        <read_only>false</read_only>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -52,16 +52,16 @@
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2018-08-14 14:32:51</sys_created_on>
-        <sys_id>f47e79274fbf13002e7e8020a310c740</sys_id>
-        <sys_mod_count>15</sys_mod_count>
-        <sys_name>Billed Amount</sys_name>
+        <sys_created_on>2018-08-14 18:57:01</sys_created_on>
+        <sys_id>71dafeef4f3353002e7e8020a310c7a7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Minimum Hours</sys_name>
         <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
         <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
-        <sys_update_name>sys_dictionary_task_time_worked_x_175353_thriveinv_billed_amount</sys_update_name>
+        <sys_update_name>sys_dictionary_x_175353_thriveinv_work_types_minimum_hours</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-14 16:33:05</sys_updated_on>
+        <sys_updated_on>2018-08-14 18:57:01</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

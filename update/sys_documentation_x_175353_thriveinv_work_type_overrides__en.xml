@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="x_175353_thriveinv_billed_amount" label="Billed Amount" language="en" table="task_time_worked">
+    <sys_documentation element="" label="Work Type Overrides" language="en" table="x_175353_thriveinv_work_type_overrides">
         <sys_documentation action="INSERT_OR_UPDATE">
-            <element>x_175353_thriveinv_billed_amount</element>
+            <element/>
             <help/>
             <hint/>
-            <label>Billed Amount</label>
+            <label>Work Type Overrides</label>
             <language>en</language>
-            <name>task_time_worked</name>
-            <plural>Billed Amounts</plural>
+            <name>x_175353_thriveinv_work_type_overrides</name>
+            <plural>Work Type Overrides</plural>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-14 14:32:51</sys_created_on>
-            <sys_id>56be3d274fbf13002e7e8020a310c77c</sys_id>
+            <sys_created_on>2018-08-14 19:18:50</sys_created_on>
+            <sys_id>5f20c3674f7353002e7e8020a310c747</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_name>Billed Amount</sys_name>
+            <sys_name>Work Type Overrides</sys_name>
             <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
             <sys_policy/>
             <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
-            <sys_update_name>sys_documentation_task_time_worked_x_175353_thriveinv_billed_amount_en</sys_update_name>
+            <sys_update_name>sys_documentation_x_175353_thriveinv_work_type_overrides__en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-14 14:32:51</sys_updated_on>
+            <sys_updated_on>2018-08-14 19:18:50</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

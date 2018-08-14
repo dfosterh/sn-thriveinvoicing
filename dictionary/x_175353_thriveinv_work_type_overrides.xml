@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="x_175353_thriveinv_work_types" label="Work Type Overrides" max_length="40" name="x_175353_thriveinv_work_type_overrides" type="collection"/>
+</database>

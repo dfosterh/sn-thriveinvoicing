@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="x_175353_thriveinv_billed_amount" label="Billed Amount" language="en" table="task_time_worked">
+    <sys_documentation element="hourly_rate" label="Hourly Rate" language="en" table="x_175353_thriveinv_labor_rate_card_overrides">
         <sys_documentation action="INSERT_OR_UPDATE">
-            <element>x_175353_thriveinv_billed_amount</element>
+            <element>hourly_rate</element>
             <help/>
             <hint/>
-            <label>Billed Amount</label>
+            <label>Hourly Rate</label>
             <language>en</language>
-            <name>task_time_worked</name>
-            <plural>Billed Amounts</plural>
+            <name>x_175353_thriveinv_labor_rate_card_overrides</name>
+            <plural>Hourly Rates</plural>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-14 14:32:51</sys_created_on>
-            <sys_id>56be3d274fbf13002e7e8020a310c77c</sys_id>
+            <sys_created_on>2018-08-14 20:42:49</sys_created_on>
+            <sys_id>3563d7e34fb353002e7e8020a310c7a4</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_name>Billed Amount</sys_name>
+            <sys_name>Hourly Rate</sys_name>
             <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
             <sys_policy/>
             <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
-            <sys_update_name>sys_documentation_task_time_worked_x_175353_thriveinv_billed_amount_en</sys_update_name>
+            <sys_update_name>sys_documentation_x_175353_thriveinv_labor_rate_card_overrides_hourly_rate_en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-14 14:32:51</sys_updated_on>
+            <sys_updated_on>2018-08-14 20:42:49</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

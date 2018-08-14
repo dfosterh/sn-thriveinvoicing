@@ -11,31 +11,31 @@
         <image/>
         <link_type>LIST</link_type>
         <map_page/>
-        <mobile_title>Invoices</mobile_title>
+        <mobile_title>Labor Rate Card Overrides</mobile_title>
         <mobile_view_name>Mobile</mobile_view_name>
-        <name>x_175353_thriveinv_invoices</name>
-        <order>100</order>
+        <name>x_175353_thriveinv_labor_rate_card_overrides</name>
+        <order>500</order>
         <override_menu_roles>false</override_menu_roles>
         <query/>
         <report/>
         <roles>x_175353_thriveinv.user</roles>
         <sys_class_name>sys_app_module</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2018-08-13 19:00:10</sys_created_on>
+        <sys_created_on>2018-08-14 20:41:45</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
-        <sys_id>1852751b4fb313002e7e8020a310c7e2</sys_id>
+        <sys_id>46231ba34fb353002e7e8020a310c743</sys_id>
         <sys_mod_count>1</sys_mod_count>
-        <sys_name>Invoices</sys_name>
+        <sys_name>Work Role Overrides</sys_name>
         <sys_overrides/>
         <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
         <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
-        <sys_update_name>sys_app_module_1852751b4fb313002e7e8020a310c7e2</sys_update_name>
+        <sys_update_name>sys_app_module_46231ba34fb353002e7e8020a310c743</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-14 17:08:47</sys_updated_on>
+        <sys_updated_on>2018-08-14 20:46:22</sys_updated_on>
         <timeline_page/>
-        <title>Invoices</title>
+        <title>Work Role Overrides</title>
         <uncancelable>false</uncancelable>
         <view_name/>
         <window_name/>

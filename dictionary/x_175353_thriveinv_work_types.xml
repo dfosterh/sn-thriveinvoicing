@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Work Types" max_length="40" name="x_175353_thriveinv_work_types" type="collection">
+        <element label="Accrual Type" max_length="30" name="accrual_type" type="string"/>
+        <element label="Active" max_length="40" name="active" type="boolean"/>
+        <element label="Default" max_length="40" name="default" type="boolean"/>
+        <element label="For Utilization" max_length="40" name="for_utilization" type="boolean"/>
+        <element label="Maximum Hours" max_length="15" name="maximum_hours" type="decimal"/>
+        <element label="Minimum Hours" max_length="15" name="minimum_hours" type="decimal"/>
+        <element label="Name" mandatory="true" max_length="100" name="name" type="string"/>
+        <element label="Price Adjustment" mandatory="true" max_length="15" name="price_adjustment" type="decimal"/>
+        <element choice="3" label="Price Adjustment Type" mandatory="true" max_length="30" name="price_adjustment_type" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Adjustment" value="adjustment"/>
+                <element inactive_on_update="false" label="Multiplier" value="multiplier"/>
+                <element inactive_on_update="false" label="Override" value="override"/>
+            </choice>
+        </element>
+        <element label="Round To Minutes" max_length="2" name="round_to_minutes" type="integer"/>
+        <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
+        <index name="index">
+            <element name="sys_class_name"/>
+        </index>
+    </element>
+</database>

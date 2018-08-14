@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_dictionary action="INSERT_OR_UPDATE" element="x_175353_thriveinv_billed_amount" table="task_time_worked">
+    <sys_dictionary action="INSERT_OR_UPDATE" element="sys_class_name" table="x_175353_thriveinv_work_types">
         <active>true</active>
         <array>false</array>
         <array_denormalized>false</array_denormalized>
         <attributes/>
         <audit>false</audit>
-        <calculation><![CDATA[(function calculatedFieldValue(current) {
-
-	// Add your code here
-	return '';  // return the calculated value
-
-})(current);]]></calculation>
-        <choice/>
+        <calculation/>
+        <choice>0</choice>
         <choice_field/>
         <choice_table/>
-        <column_label>Billed Amount</column_label>
+        <column_label>Class</column_label>
         <comments/>
         <create_roles/>
-        <default_value/>
+        <default_value>javascript:current.getTableName();</default_value>
         <defaultsort/>
         <delete_roles/>
         <dependent/>
@@ -27,18 +22,18 @@
         <dynamic_creation_script/>
         <dynamic_default_value/>
         <dynamic_ref_qual/>
-        <element>x_175353_thriveinv_billed_amount</element>
+        <element>sys_class_name</element>
         <element_reference>false</element_reference>
         <foreign_database/>
-        <function_definition>glidefunction:multiply(x_175353_thriveinv_billed_rate, divide(time_in_seconds, '3600'))</function_definition>
-        <function_field>true</function_field>
-        <internal_type display_value="Decimal">decimal</internal_type>
+        <function_definition/>
+        <function_field>false</function_field>
+        <internal_type display_value="">sys_class_name</internal_type>
         <mandatory>false</mandatory>
-        <max_length>20</max_length>
-        <name>task_time_worked</name>
+        <max_length>80</max_length>
+        <name>x_175353_thriveinv_work_types</name>
         <next_element/>
         <primary>false</primary>
-        <read_only>true</read_only>
+        <read_only>false</read_only>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -52,16 +47,16 @@
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2018-08-14 14:32:51</sys_created_on>
-        <sys_id>f47e79274fbf13002e7e8020a310c740</sys_id>
-        <sys_mod_count>15</sys_mod_count>
-        <sys_name>Billed Amount</sys_name>
+        <sys_created_on>2018-08-14 19:18:18</sys_created_on>
+        <sys_id>a30043674f7353002e7e8020a310c704</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Class</sys_name>
         <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
         <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
-        <sys_update_name>sys_dictionary_task_time_worked_x_175353_thriveinv_billed_amount</sys_update_name>
+        <sys_update_name>sys_dictionary_x_175353_thriveinv_work_types_sys_class_name</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-14 16:33:05</sys_updated_on>
+        <sys_updated_on>2018-08-14 19:18:18</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
