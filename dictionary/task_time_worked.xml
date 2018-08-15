@@ -4,7 +4,22 @@
         <element function_definition="glidefunction:multiply(x_175353_thriveinv_billed_rate, divide(time_in_seconds, '3600'))" function_field="true" label="Billed Amount" max_length="20" name="x_175353_thriveinv_billed_amount" read_only="true" type="decimal"/>
         <element label="Billed Rate" max_length="15" name="x_175353_thriveinv_billed_rate" read_only="true" type="decimal"/>
         <element label="Cost" max_length="15" name="x_175353_thriveinv_cost" read_only="true" type="decimal"/>
-        <element label="Invoiced" max_length="40" name="x_175353_thriveinv_invoiced" read_only="true" type="boolean"/>
+        <element label="Invoice" max_length="32" name="x_175353_thriveinv_invoice" read_only="true" reference="x_175353_thriveinv_invoices" type="reference"/>
         <element label="Rack Rate" max_length="15" name="x_175353_thriveinv_rack_rate" read_only="true" type="decimal"/>
+        <element choice="3" label="Work Role" max_length="32" name="x_175353_thriveinv_work_role" reference="fm_labor_rate_card" type="reference">
+            <choice/>
+        </element>
+        <element choice="3" label="Work Type" max_length="32" name="x_175353_thriveinv_work_type" reference="x_175353_thriveinv_work_types" type="reference">
+            <choice/>
+        </element>
+        <index name="index">
+            <element name="x_175353_thriveinv_invoice"/>
+        </index>
+        <index name="index2">
+            <element name="x_175353_thriveinv_work_role"/>
+        </index>
+        <index name="index3">
+            <element name="x_175353_thriveinv_work_type"/>
+        </index>
     </element>
 </database>

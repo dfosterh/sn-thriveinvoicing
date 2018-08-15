@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
     <sys_ui_section caption="Thrive Invoicing" section_id="98210e934ff313002e7e8020a310c752" sys_domain="global" table="task_time_worked" version="3" view="">
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>x_175353_thriveinv_cost</element>
+            <element>x_175353_thriveinv_work_role</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-13 20:17:28</sys_created_on>
-            <sys_id>6404c6974ff313002e7e8020a310c749</sys_id>
+            <sys_created_on>2018-08-15 18:24:57</sys_created_on>
+            <sys_id>ff6d3bbb4f7313002e7e8020a310c75f</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="task_time_worked" sys_domain="global" view="Default view">98210e934ff313002e7e8020a310c752</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-13 20:17:28</sys_updated_on>
+            <sys_updated_on>2018-08-15 18:24:57</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>x_175353_thriveinv_rack_rate</element>
+            <element>x_175353_thriveinv_work_type</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-13 20:17:28</sys_created_on>
-            <sys_id>6004c6974ff313002e7e8020a310c74a</sys_id>
+            <sys_created_on>2018-08-15 18:24:57</sys_created_on>
+            <sys_id>736d3bbb4f7313002e7e8020a310c760</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="task_time_worked" sys_domain="global" view="Default view">98210e934ff313002e7e8020a310c752</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-13 20:17:28</sys_updated_on>
+            <sys_updated_on>2018-08-15 18:24:57</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>x_175353_thriveinv_invoiced</element>
+            <element>x_175353_thriveinv_cost</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-13 20:17:28</sys_created_on>
-            <sys_id>e004c6974ff313002e7e8020a310c74a</sys_id>
+            <sys_created_on>2018-08-15 18:24:57</sys_created_on>
+            <sys_id>f36d3bbb4f7313002e7e8020a310c760</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="task_time_worked" sys_domain="global" view="Default view">98210e934ff313002e7e8020a310c752</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-13 20:17:28</sys_updated_on>
+            <sys_updated_on>2018-08-15 18:24:57</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -46,55 +46,69 @@
             <element>.split</element>
             <position>3</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-13 20:17:28</sys_created_on>
-            <sys_id>6404c6974ff313002e7e8020a310c74a</sys_id>
+            <sys_created_on>2018-08-15 18:24:57</sys_created_on>
+            <sys_id>776d3bbb4f7313002e7e8020a310c760</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="task_time_worked" sys_domain="global" view="Default view">98210e934ff313002e7e8020a310c752</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-13 20:17:28</sys_updated_on>
+            <sys_updated_on>2018-08-15 18:24:57</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>x_175353_thriveinv_billed_rate</element>
+            <element>x_175353_thriveinv_rack_rate</element>
             <position>4</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-13 20:17:28</sys_created_on>
-            <sys_id>e404c6974ff313002e7e8020a310c74a</sys_id>
+            <sys_created_on>2018-08-15 18:24:57</sys_created_on>
+            <sys_id>f76d3bbb4f7313002e7e8020a310c760</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="task_time_worked" sys_domain="global" view="Default view">98210e934ff313002e7e8020a310c752</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-13 20:17:28</sys_updated_on>
+            <sys_updated_on>2018-08-15 18:24:57</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>x_175353_thriveinv_billed_rate</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-08-15 18:24:57</sys_created_on>
+            <sys_id>7b6d3bbb4f7313002e7e8020a310c760</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="task_time_worked" sys_domain="global" view="Default view">98210e934ff313002e7e8020a310c752</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-08-15 18:24:57</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>x_175353_thriveinv_billed_amount</element>
-            <position>5</position>
+            <position>6</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-13 20:17:28</sys_created_on>
-            <sys_id>6804c6974ff313002e7e8020a310c74a</sys_id>
+            <sys_created_on>2018-08-15 18:24:57</sys_created_on>
+            <sys_id>fb6d3bbb4f7313002e7e8020a310c760</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="task_time_worked" sys_domain="global" view="Default view">98210e934ff313002e7e8020a310c752</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-13 20:17:28</sys_updated_on>
+            <sys_updated_on>2018-08-15 18:24:57</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>x_175353_thriveinv_adjustment_reason</element>
-            <position>6</position>
+            <position>7</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-13 20:17:28</sys_created_on>
-            <sys_id>e804c6974ff313002e7e8020a310c74a</sys_id>
+            <sys_created_on>2018-08-15 18:24:57</sys_created_on>
+            <sys_id>7f6d3bbb4f7313002e7e8020a310c760</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="task_time_worked" sys_domain="global" view="Default view">98210e934ff313002e7e8020a310c752</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-13 20:17:28</sys_updated_on>
+            <sys_updated_on>2018-08-15 18:24:57</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

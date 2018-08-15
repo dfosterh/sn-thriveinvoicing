@@ -8,38 +8,54 @@
         <name>ThriveInvoiceUtil</name>
         <script><![CDATA[var ThriveInvoiceUtil = Class.create();
 
-ThriveInvoiceUtil.SetTimeInvoiced = function(currentref) {
-	//not using Secure, so ACLs ignored
+ThriveInvoiceUtil.SetTimeInvoiced = function(invoice) {
 	var te = new GlideRecord('task_time_worked');
-	te.addQuery('x_175353_thriveinv_invoiced', false);
-	te.addQuery('task.sys_domain', currentref.sys_domain);
+	var qry = gs.getMessage('task.sys_domain={0}^x_175353_thriveinv_invoice={1}^ORx_175353_thriveinv_invoiceISEMPTY', [invoice.sys_domain, invoice.sys_id]);
+	te.addQuery(qry);
 	te.query();
 	
 	while (te.next()) {
-		var wr = new GlideRecord('x_175353_thriveinv_labor_rate_card_overrides');
-		wr.addQuery('company', te.task.company);
-		wr.query();
-if(wr.next()) {
-gs.addInfoMessage(gs.getMessage(wr.company));
-			te.x_175353_thriveinv_billed_rate = wr.hourly_rate;
-			te.update();
+		var wrRate = ThriveInvoiceUtil.GetWorkRoleRateForCompany(te.x_175353_thriveinv_work_role, te.task.company);
+		if (!wrRate) {
+			wrRate = ThriveInvoiceUtil.GetWorkRoleRate(te.x_175353_thriveinv_work_role);
 		}
+
+		te.x_175353_thriveinv_invoice = invoice.sys_id;
+		te.x_175353_thriveinv_billed_rate = wrRate;
+		te.update();
 	}
 	
 	gs.addInfoMessage(gs.getMessage('All non-invoiced Time Worked records have been updated.'));
+};
+
+ThriveInvoiceUtil.GetWorkRoleRateForCompany = function(workRoleId, companyId) {
+	var wr = new GlideRecord('x_175353_thriveinv_labor_rate_card_overrides');
+	wr.addQuery('overridden_work_type', workRoleId);
+	wr.addQuery('company', companyId);
+	wr.query();
+
+	if(wr.next()) {
+		return wr.hourly_rate;
+	}
+};
+
+ThriveInvoiceUtil.GetWorkRoleRate = function(workRoleId) {
+	var wr = new GlideRecord('fm_labor_rate_card');
+	wr.get(workRoleId);
+	return wr.hourly_rate;
 };
 ]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-13 19:35:01</sys_created_on>
         <sys_id>ce2ab99f4fb313002e7e8020a310c743</sys_id>
-        <sys_mod_count>6</sys_mod_count>
+        <sys_mod_count>32</sys_mod_count>
         <sys_name>ThriveInvoiceUtil</sys_name>
         <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_script_include_ce2ab99f4fb313002e7e8020a310c743</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-14 21:42:15</sys_updated_on>
+        <sys_updated_on>2018-08-15 22:09:24</sys_updated_on>
     </sys_script_include>
 </record_update>
