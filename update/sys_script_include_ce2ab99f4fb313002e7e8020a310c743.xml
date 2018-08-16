@@ -13,19 +13,96 @@ ThriveInvoiceUtil.SetTimeInvoiced = function(invoice) {
 	var qry = gs.getMessage('task.sys_domain={0}^x_175353_thriveinv_invoice={1}^ORx_175353_thriveinv_invoiceISEMPTY', [invoice.sys_domain, invoice.sys_id]);
 	te.addQuery(qry);
 	te.query();
-	
+
 	while (te.next()) {
-		var wrRate = ThriveInvoiceUtil.GetWorkRoleRateForCompany(te.x_175353_thriveinv_work_role, te.task.company);
-		if (!wrRate) {
-			wrRate = ThriveInvoiceUtil.GetWorkRoleRate(te.x_175353_thriveinv_work_role);
+		var wrRate = ThriveInvoiceUtil.GetWorkRoleRate(te.x_175353_thriveinv_work_role, te.task.company, null, null);
+		if(!wrRate) {
+			return;
+		}
+
+		var workType = ThriveInvoiceUtil.GetWorkType(te.x_175353_thriveinv_work_type, te.task.company, null, null);
+		if(!workType) {
+			return;
 		}
 
 		te.x_175353_thriveinv_invoice = invoice.sys_id;
-		te.x_175353_thriveinv_billed_rate = wrRate;
+		te.x_175353_thriveinv_billed_rate = ThriveInvoiceUtil.GetBilledRate(wrRate, workType);
+		te.x_175353_thriveinv_billed_hours = ThriveInvoiceUtil.GetBilledHours(te.time_in_seconds, workType);
+		te.x_175353_thriveinv_adjustment_reason = ThriveInvoiceUtil.PriceAdjustmentRole + '; ' + ThriveInvoiceUtil.PriceAdjustmentRounded + '; ' + ThriveInvoiceUtil.PriceAdjustmentReason;
 		te.update();
 	}
-	
+
 	gs.addInfoMessage(gs.getMessage('All non-invoiced Time Worked records have been updated.'));
+	};
+	
+ThriveInvoiceUtil.GetBilledRate = function(wrRate, workType) {
+	var returnValue;
+
+	switch(workType.price_adjustment_type.toString()) {
+		case 'adjustment':
+			returnValue = wrRate + workType.price_adjustment;
+			ThriveInvoiceUtil.PriceAdjustmentReason = gs.getMessage('Rate adjusted by {0} from Work Type', [workType.price_adjustment.toString()]);
+			break;
+		case 'multiplier':
+			returnValue = wrRate * workType.price_adjustment;
+			ThriveInvoiceUtil.PriceAdjustmentReason = gs.getMessage('Rate multiplied by {0} from Work Type', [workType.price_adjustment.toString()]);
+			break;
+		case 'override':
+			returnValue = workType.price_adjustment;
+			ThriveInvoiceUtil.PriceAdjustmentReason = gs.getMessage('Rate overridden with {0} from Work Type', [workType.price_adjustment.toString()]);
+			break;
+		default:
+			gs.addErrorMessage('There is a Price Adjustment Type in Work Types that does not yet have a calculation.');
+	}
+
+	return returnValue;
+};
+
+ThriveInvoiceUtil.GetBilledHours = function(teSeconds, workType) {
+	//1st minute is not counted. We can make it first 30-seconds with round, or just let any second over round up
+	var teMinutes = Math.floor(teSeconds / 60);
+
+	if(workType.round_to_minutes && workType.round_to_minutes > 0) {
+		//round up
+		if (teMinutes % workType.round_to_minutes > 0) {
+			teMinutes = workType.round_to_minutes * (Math.floor(teMinutes / workType.round_to_minutes) + 1);
+		}
+		
+		ThriveInvoiceUtil.PriceAdjustmentRounded = gs.getMessage('Hours rounded to the nearest {0} minutes', [workType.round_to_minutes.toString()]);
+	}
+
+	return teMinutes / 60;
+};
+
+ThriveInvoiceUtil.GetWorkRoleRate = function(workRoleId, companyId, contractId, projectId) {
+	if(!workRoleId) {
+		gs.addErrorMessage('There is a Time Entry with no Work Role selected.');
+		return null;
+	}
+
+	var wrRate = ThriveInvoiceUtil.GetWorkRoleRateForCompany(workRoleId, companyId);
+	if (!wrRate) {
+		wrRate = ThriveInvoiceUtil.GetWorkRoleRateDefault(workRoleId);
+		ThriveInvoiceUtil.PriceAdjustmentRole = gs.getMessage('Work Role rate from Company Override');
+	}
+	else {
+		ThriveInvoiceUtil.PriceAdjustmentRole = gs.getMessage('Work Role rate from Default Work Role');
+	}
+
+	return wrRate;
+};
+
+ThriveInvoiceUtil.GetWorkType = function(workTypeId, companyId, contractId, projectId) {
+	if(!workTypeId) {
+		gs.addErrorMessage('There is a Time Entry with no Work Type selected.');
+		return null;
+	}
+
+	var returnValue;
+
+	returnValue = ThriveInvoiceUtil.GetWorkTypeDefault(workTypeId);
+
+	return returnValue;
 };
 
 ThriveInvoiceUtil.GetWorkRoleRateForCompany = function(workRoleId, companyId) {
@@ -39,23 +116,29 @@ ThriveInvoiceUtil.GetWorkRoleRateForCompany = function(workRoleId, companyId) {
 	}
 };
 
-ThriveInvoiceUtil.GetWorkRoleRate = function(workRoleId) {
+ThriveInvoiceUtil.GetWorkRoleRateDefault = function(workRoleId) {
 	var wr = new GlideRecord('fm_labor_rate_card');
 	wr.get(workRoleId);
 	return wr.hourly_rate;
+};
+
+ThriveInvoiceUtil.GetWorkTypeDefault = function(workTypeId) {
+	var wt = new GlideRecord('x_175353_thriveinv_work_types');
+	wt.get(workTypeId);
+	return wt;
 };
 ]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-13 19:35:01</sys_created_on>
         <sys_id>ce2ab99f4fb313002e7e8020a310c743</sys_id>
-        <sys_mod_count>32</sys_mod_count>
+        <sys_mod_count>63</sys_mod_count>
         <sys_name>ThriveInvoiceUtil</sys_name>
         <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_script_include_ce2ab99f4fb313002e7e8020a310c743</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-15 22:09:24</sys_updated_on>
+        <sys_updated_on>2018-08-16 22:07:18</sys_updated_on>
     </sys_script_include>
 </record_update>
