@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element label="Invoice Details" max_length="40" name="x_175353_thriveinv_invoice_details" type="collection">
-        <element label="Domain" max_length="32" name="domain" type="domain_id"/>
-        <element label="Invoice" mandatory="true" max_length="32" name="invoice" reference="x_175353_thriveinv_invoices" type="reference"/>
+        <element label="Billed Amount" max_length="20" name="billed_amount" read_only="true" type="decimal"/>
+        <element label="Billed Hours" max_length="20" name="billed_hours" read_only="true" type="decimal"/>
+        <element label="Billed Rate" max_length="20" name="billed_rate" read_only="true" type="decimal"/>
+        <element label="Detail" max_length="1000" name="detail" read_only="true" type="string"/>
+        <element label="Invoice" mandatory="true" max_length="32" name="invoice" read_only="true" reference="x_175353_thriveinv_invoices" type="reference"/>
+        <element label="Item" max_length="50" name="item" read_only="true" type="string"/>
         <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Source" max_length="1024" name="sourceidlink" read_only="true" type="url"/>
         <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
+        <element label="Domain" max_length="32" name="sys_domain" type="domain_id"/>
+        <element label="Domain Path" max_length="255" name="sys_domain_path" type="domain_path"/>
+        <element label="Time Entry" max_length="32" name="time_entry" read_only="true" reference="task_time_worked" type="reference"/>
         <index name="index">
-            <element name="domain"/>
+            <element name="sys_domain"/>
         </index>
         <index name="index2">
             <element name="invoice"/>
         </index>
         <index name="index3">
+            <element name="sys_domain_path"/>
+        </index>
+        <index name="index4">
+            <element name="time_entry"/>
+        </index>
+        <index name="index5">
             <element name="sys_class_name"/>
         </index>
     </element>

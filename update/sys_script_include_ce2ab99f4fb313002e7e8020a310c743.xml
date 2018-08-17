@@ -7,49 +7,113 @@
         <description/>
         <name>ThriveInvoiceUtil</name>
         <script><![CDATA[var ThriveInvoiceUtil = Class.create();
+ThriveInvoiceUtil.AdjustmentReason = [];
+
+ThriveInvoiceUtil.SetInvoiceDetails = function(invoice) {
+	try {
+		var te = new GlideRecord('task_time_worked');
+		te.addQuery('x_175353_thriveinv_invoice', invoice.sys_id);
+		te.query();
+		
+		var priorDetail = new GlideRecord('x_175353_thriveinv_invoice_details');
+		priorDetail.addQuery('invoice', invoice.sys_id);
+		priorDetail.deleteMultiple();
+		
+		while (te.next()) {
+			var detail = new GlideRecord('x_175353_thriveinv_invoice_details');
+			detail.initialize();
+			
+			detail.invoice = invoice.sys_id;
+			detail.time_entry = te.sys_id;
+			detail.sourceidlink = '/task_time_worked' + '.do?sys_id=' + te.sys_id;
+			detail.item = 'Time Entry';
+			detail.detail = te.comments;
+			detail.billed_hours = te.x_175353_thriveinv_billed_hours;
+			detail.billed_rate = te.x_175353_thriveinv_billed_rate;
+			detail.billed_amount = te.x_175353_thriveinv_billed_hours * te.x_175353_thriveinv_billed_rate;
+			
+			detail.insert();
+		}
+
+		gs.addInfoMessage(gs.getMessage('Invoice detail records generated.'));
+	}
+	catch(ex) {
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetails: ' + ex.message);
+	}
+};
 
 ThriveInvoiceUtil.SetTimeInvoiced = function(invoice) {
-	var te = new GlideRecord('task_time_worked');
-	var qry = gs.getMessage('task.sys_domain={0}^x_175353_thriveinv_invoice={1}^ORx_175353_thriveinv_invoiceISEMPTY', [invoice.sys_domain, invoice.sys_id]);
-	te.addQuery(qry);
-	te.query();
+	try {
+		var te = new GlideRecord('task_time_worked');
+		var qry = gs.getMessage('task.sys_domain={0}^x_175353_thriveinv_invoiceISEMPTY^ORx_175353_thriveinv_invoice={1}', [invoice.sys_domain, invoice.sys_id]);
+		te.addQuery(qry);
+		te.query();
 
-	while (te.next()) {
-		var wrRate = ThriveInvoiceUtil.GetWorkRoleRate(te.x_175353_thriveinv_work_role, te.task.company, null, null);
-		if(!wrRate) {
-			return;
+		while (te.next()) {
+			var wrRate = ThriveInvoiceUtil.GetWorkRoleRate(1, te.x_175353_thriveinv_work_role, te.task.company, null, null);
+			if(!wrRate) {
+				te.x_175353_thriveinv_has_billing_issue = true;
+				te.x_175353_thriveinv_adjustment_reason = 'Failed to get Work Role rate';
+			}
+			
+			var workType = ThriveInvoiceUtil.GetWorkType(2, te.x_175353_thriveinv_work_type, te.task.company, null, null);
+			if(!workType) {
+				te.x_175353_thriveinv_has_billing_issue = true;
+				te.x_175353_thriveinv_adjustment_reason = 'Failed to get Work Type';
+			}
+			
+			if(wrRate && workType) {
+				te.x_175353_thriveinv_invoice = invoice.sys_id;
+				te.x_175353_thriveinv_billed_rate = ThriveInvoiceUtil.GetBilledRate(3, wrRate, workType);
+				te.x_175353_thriveinv_billed_hours = ThriveInvoiceUtil.GetBilledHours(4, te.time_in_seconds, workType);
+				te.x_175353_thriveinv_adjustment_reason = ThriveInvoiceUtil.AdjustmentReason.sort(function(a, b) {
+					return a.order - b.order;
+				}).map(function(a) {
+					return a.value;
+				}).join("; ");
+
+				//for some reason, clearing this at the beginning does not work. Need to clear it after I'm done like this
+				ThriveInvoiceUtil.AdjustmentReason.length = 0;
+
+				te.x_175353_thriveinv_has_billing_issue = false;
+			}
+
+			
+			
+			te.update();
 		}
 
-		var workType = ThriveInvoiceUtil.GetWorkType(te.x_175353_thriveinv_work_type, te.task.company, null, null);
-		if(!workType) {
-			return;
-		}
-
-		te.x_175353_thriveinv_invoice = invoice.sys_id;
-		te.x_175353_thriveinv_billed_rate = ThriveInvoiceUtil.GetBilledRate(wrRate, workType);
-		te.x_175353_thriveinv_billed_hours = ThriveInvoiceUtil.GetBilledHours(te.time_in_seconds, workType);
-		te.x_175353_thriveinv_adjustment_reason = ThriveInvoiceUtil.PriceAdjustmentRole + '; ' + ThriveInvoiceUtil.PriceAdjustmentRounded + '; ' + ThriveInvoiceUtil.PriceAdjustmentReason;
-		te.update();
+		gs.addInfoMessage(gs.getMessage('All non-invoiced Time Worked records have been updated with invoice details.'));
 	}
-
-	gs.addInfoMessage(gs.getMessage('All non-invoiced Time Worked records have been updated.'));
-	};
+	catch(ex) {
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetTimeInvoiced: ' + ex.message);
+	}
+};
 	
-ThriveInvoiceUtil.GetBilledRate = function(wrRate, workType) {
+ThriveInvoiceUtil.GetBilledRate = function(messageOrder, wrRate, workType) {
 	var returnValue;
 
 	switch(workType.price_adjustment_type.toString()) {
 		case 'adjustment':
 			returnValue = wrRate + workType.price_adjustment;
-			ThriveInvoiceUtil.PriceAdjustmentReason = gs.getMessage('Rate adjusted by {0} from Work Type', [workType.price_adjustment.toString()]);
+			ThriveInvoiceUtil.AdjustmentReason.push({
+				order: messageOrder,
+				value: gs.getMessage('Rate adjusted by ${0} from Work Type', [workType.price_adjustment.toString()])
+			});
 			break;
 		case 'multiplier':
 			returnValue = wrRate * workType.price_adjustment;
-			ThriveInvoiceUtil.PriceAdjustmentReason = gs.getMessage('Rate multiplied by {0} from Work Type', [workType.price_adjustment.toString()]);
+			ThriveInvoiceUtil.AdjustmentReason.push({
+				order: messageOrder,
+				value: gs.getMessage('Rate multiplied by {0} from Work Type', [workType.price_adjustment.toString()])
+			});
 			break;
 		case 'override':
 			returnValue = workType.price_adjustment;
-			ThriveInvoiceUtil.PriceAdjustmentReason = gs.getMessage('Rate overridden with {0} from Work Type', [workType.price_adjustment.toString()]);
+			ThriveInvoiceUtil.AdjustmentReason.push({
+				order: messageOrder,
+				value: gs.getMessage('Rate overridden to ${0} from Work Type', [workType.price_adjustment.toString()])
+			});
 			break;
 		default:
 			gs.addErrorMessage('There is a Price Adjustment Type in Work Types that does not yet have a calculation.');
@@ -58,7 +122,7 @@ ThriveInvoiceUtil.GetBilledRate = function(wrRate, workType) {
 	return returnValue;
 };
 
-ThriveInvoiceUtil.GetBilledHours = function(teSeconds, workType) {
+ThriveInvoiceUtil.GetBilledHours = function(messageOrder, teSeconds, workType) {
 	//1st minute is not counted. We can make it first 30-seconds with round, or just let any second over round up
 	var teMinutes = Math.floor(teSeconds / 60);
 
@@ -67,40 +131,59 @@ ThriveInvoiceUtil.GetBilledHours = function(teSeconds, workType) {
 		if (teMinutes % workType.round_to_minutes > 0) {
 			teMinutes = workType.round_to_minutes * (Math.floor(teMinutes / workType.round_to_minutes) + 1);
 		}
-		
-		ThriveInvoiceUtil.PriceAdjustmentRounded = gs.getMessage('Hours rounded to the nearest {0} minutes', [workType.round_to_minutes.toString()]);
-	}
+
+		ThriveInvoiceUtil.AdjustmentReason.push({
+			order: messageOrder,
+			value: gs.getMessage('Hours rounded to the nearest {0} minutes from Work Type', [workType.round_to_minutes.toString()])
+		});	}
 
 	return teMinutes / 60;
 };
 
-ThriveInvoiceUtil.GetWorkRoleRate = function(workRoleId, companyId, contractId, projectId) {
+ThriveInvoiceUtil.GetWorkRoleRate = function(messageOrder, workRoleId, companyId, contractId, projectId) {
 	if(!workRoleId) {
 		gs.addErrorMessage('There is a Time Entry with no Work Role selected.');
 		return null;
 	}
 
 	var wrRate = ThriveInvoiceUtil.GetWorkRoleRateForCompany(workRoleId, companyId);
-	if (!wrRate) {
-		wrRate = ThriveInvoiceUtil.GetWorkRoleRateDefault(workRoleId);
-		ThriveInvoiceUtil.PriceAdjustmentRole = gs.getMessage('Work Role rate from Company Override');
+	if (wrRate) {
+		ThriveInvoiceUtil.AdjustmentReason.push({
+			order: messageOrder,
+			value: gs.getMessage('Work Role rate ${0} from Company Override', [wrRate])
+		});
 	}
 	else {
-		ThriveInvoiceUtil.PriceAdjustmentRole = gs.getMessage('Work Role rate from Default Work Role');
+		wrRate = ThriveInvoiceUtil.GetWorkRoleRateDefault(workRoleId);
+		ThriveInvoiceUtil.AdjustmentReason.push({
+			order: messageOrder,
+			value: gs.getMessage('Work Role rate ${0} from Default Work Role', [wrRate])
+		});
 	}
 
 	return wrRate;
 };
 
-ThriveInvoiceUtil.GetWorkType = function(workTypeId, companyId, contractId, projectId) {
+ThriveInvoiceUtil.GetWorkType = function(messageOrder, workTypeId, companyId, contractId, projectId) {
 	if(!workTypeId) {
 		gs.addErrorMessage('There is a Time Entry with no Work Type selected.');
 		return null;
 	}
 
-	var returnValue;
-
-	returnValue = ThriveInvoiceUtil.GetWorkTypeDefault(workTypeId);
+	var returnValue = ThriveInvoiceUtil.GetWorkTypeForCompany(workTypeId, companyId);
+	if (returnValue) {
+		ThriveInvoiceUtil.AdjustmentReason.push({
+			order: messageOrder,
+			value: gs.getMessage('Work Type from Company Override')
+		});
+	}
+	else {
+		returnValue = ThriveInvoiceUtil.GetWorkTypeDefault(workTypeId);
+		ThriveInvoiceUtil.AdjustmentReason.push({
+			order: messageOrder,
+			value: gs.getMessage('Work Type from Default')
+		});
+	}
 
 	return returnValue;
 };
@@ -122,6 +205,17 @@ ThriveInvoiceUtil.GetWorkRoleRateDefault = function(workRoleId) {
 	return wr.hourly_rate;
 };
 
+ThriveInvoiceUtil.GetWorkTypeForCompany = function(workTypeId, companyId) {
+	var wt = new GlideRecord('x_175353_thriveinv_work_types');
+	wt.addQuery('overridden_work_type', workTypeId);
+	wt.addQuery('company', companyId);
+	wt.query();
+
+	if(wt.next()) {
+		return wt;
+	}
+};
+
 ThriveInvoiceUtil.GetWorkTypeDefault = function(workTypeId) {
 	var wt = new GlideRecord('x_175353_thriveinv_work_types');
 	wt.get(workTypeId);
@@ -132,13 +226,13 @@ ThriveInvoiceUtil.GetWorkTypeDefault = function(workTypeId) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-13 19:35:01</sys_created_on>
         <sys_id>ce2ab99f4fb313002e7e8020a310c743</sys_id>
-        <sys_mod_count>63</sys_mod_count>
+        <sys_mod_count>111</sys_mod_count>
         <sys_name>ThriveInvoiceUtil</sys_name>
         <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_script_include_ce2ab99f4fb313002e7e8020a310c743</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-16 22:07:18</sys_updated_on>
+        <sys_updated_on>2018-08-17 22:00:45</sys_updated_on>
     </sys_script_include>
 </record_update>

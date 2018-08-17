@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="x_175353_thriveinv_has_billing_issue" label="Has Billing Issue" language="en" table="task_time_worked">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>x_175353_thriveinv_has_billing_issue</element>
+            <help/>
+            <hint/>
+            <label>Has Billing Issue</label>
+            <language>en</language>
+            <name>task_time_worked</name>
+            <plural>Has Billing Issues</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-08-17 20:38:30</sys_created_on>
+            <sys_id>e72f626c4f0423002e7e8020a310c7a7</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Has Billing Issue</sys_name>
+            <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+            <sys_update_name>sys_documentation_task_time_worked_x_175353_thriveinv_has_billing_issue_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-08-17 20:38:30</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

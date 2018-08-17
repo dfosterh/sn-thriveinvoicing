@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="demo_rate" label="DEMO Rate" language="en" table="x_175353_thriveinv_invoices">
+    <sys_documentation element="billed_amount" label="Billed Amount" language="en" table="x_175353_thriveinv_invoice_details">
         <sys_documentation action="INSERT_OR_UPDATE">
-            <element>demo_rate</element>
+            <element>billed_amount</element>
             <help/>
             <hint/>
-            <label>DEMO Rate</label>
+            <label>Billed Amount</label>
             <language>en</language>
-            <name>x_175353_thriveinv_invoices</name>
-            <plural>DEMO Rates</plural>
+            <name>x_175353_thriveinv_invoice_details</name>
+            <plural>Billed Amounts</plural>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-13 20:50:46</sys_created_on>
-            <sys_id>58ab8a1f4ff313002e7e8020a310c788</sys_id>
+            <sys_created_on>2018-08-17 18:07:25</sys_created_on>
+            <sys_id>629c8e604fc023002e7e8020a310c778</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_name>DEMO Rate</sys_name>
+            <sys_name>Billed Amount</sys_name>
             <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
             <sys_policy/>
             <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
-            <sys_update_name>sys_documentation_x_175353_thriveinv_invoices_demo_rate_en</sys_update_name>
+            <sys_update_name>sys_documentation_x_175353_thriveinv_invoice_details_billed_amount_en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-13 20:50:46</sys_updated_on>
+            <sys_updated_on>2018-08-17 18:07:25</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

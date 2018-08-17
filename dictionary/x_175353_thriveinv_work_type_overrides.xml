@@ -1,3 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element extends="x_175353_thriveinv_work_types" label="Work Type Overrides" max_length="40" name="x_175353_thriveinv_work_type_overrides" type="collection"/>
+    <element extends="x_175353_thriveinv_work_types" label="Work Type Overrides" max_length="40" name="x_175353_thriveinv_work_type_overrides" type="collection">
+        <element label="Company" mandatory="true" max_length="32" name="company" reference="core_company" type="reference"/>
+        <element label="Contract" max_length="32" name="contract" reference="ast_contract" type="reference"/>
+        <element choice="3" label="Overridden Work Type" mandatory="true" max_length="32" name="overridden_work_type" reference="x_175353_thriveinv_work_types" type="reference">
+            <choice/>
+        </element>
+        <element label="Project" max_length="32" name="project" reference="pm_project" type="reference"/>
+        <index name="index">
+            <element name="overridden_work_type"/>
+        </index>
+        <index name="index2">
+            <element name="contract"/>
+        </index>
+        <index name="index3">
+            <element name="project"/>
+        </index>
+        <index name="index4">
+            <element name="company"/>
+        </index>
+    </element>
 </database>

@@ -26,7 +26,13 @@
         <name>Calculate</name>
         <onclick/>
         <order>100</order>
-        <script><![CDATA[x_175353_thriveinv.ThriveInvoiceUtil.SetTimeInvoiced(current);]]></script>
+        <script><![CDATA[//x_175353_thriveinv.ThriveInvoiceUtil.SetServiceItemsInvoiced(current);
+//x_175353_thriveinv.ThriveInvoiceUtil.SetContract/Project?Invoiced(current);
+x_175353_thriveinv.ThriveInvoiceUtil.SetTimeInvoiced(current);
+
+x_175353_thriveinv.ThriveInvoiceUtil.SetInvoiceDetails(current);
+
+action.setRedirectURL(current);]]></script>
         <show_insert>true</show_insert>
         <show_multiple_update>false</show_multiple_update>
         <show_query>false</show_query>
@@ -37,7 +43,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>cad7d4104f4023002e7e8020a310c77c</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>Calculate</sys_name>
         <sys_overrides/>
         <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
@@ -45,7 +51,7 @@
         <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_ui_action_cad7d4104f4023002e7e8020a310c77c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-16 19:55:12</sys_updated_on>
+        <sys_updated_on>2018-08-17 20:35:06</sys_updated_on>
         <table>x_175353_thriveinv_invoices</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>
