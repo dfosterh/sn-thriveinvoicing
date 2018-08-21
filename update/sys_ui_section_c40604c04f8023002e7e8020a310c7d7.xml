@@ -4,13 +4,41 @@
             <element>time_worked</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-15 19:05:25</sys_created_on>
-            <sys_id>e4b68cc04f8023002e7e8020a310c7e4</sys_id>
+            <sys_created_on>2018-08-20 18:37:03</sys_created_on>
+            <sys_id>4a20f96d4f8023002e7e8020a310c7b1</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="pm_project_task" sys_domain="global" view="Default view">c40604c04f8023002e7e8020a310c7d7</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-15 19:05:25</sys_updated_on>
+            <sys_updated_on>2018-08-20 18:37:03</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>x_175353_thriveinv_work_role</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-08-20 18:37:03</sys_created_on>
+            <sys_id>ca20f96d4f8023002e7e8020a310c7b1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="pm_project_task" sys_domain="global" view="Default view">c40604c04f8023002e7e8020a310c7d7</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-08-20 18:37:03</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>x_175353_thriveinv_work_type</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-08-20 18:37:03</sys_created_on>
+            <sys_id>4e20f96d4f8023002e7e8020a310c7b1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="pm_project_task" sys_domain="global" view="Default view">c40604c04f8023002e7e8020a310c7d7</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-08-20 18:37:03</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

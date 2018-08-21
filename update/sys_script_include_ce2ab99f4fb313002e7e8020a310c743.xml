@@ -18,7 +18,8 @@ ThriveInvoiceUtil.SetInvoiceDetails = function(invoice) {
 		var priorDetail = new GlideRecord('x_175353_thriveinv_invoice_details');
 		priorDetail.addQuery('invoice', invoice.sys_id);
 		priorDetail.deleteMultiple();
-		
+
+var totalBilledAmount = 0;
 		while (te.next()) {
 			var detail = new GlideRecord('x_175353_thriveinv_invoice_details');
 			detail.initialize();
@@ -31,11 +32,28 @@ ThriveInvoiceUtil.SetInvoiceDetails = function(invoice) {
 			detail.billed_hours = te.x_175353_thriveinv_billed_hours;
 			detail.billed_rate = te.x_175353_thriveinv_billed_rate;
 			detail.billed_amount = te.x_175353_thriveinv_billed_hours * te.x_175353_thriveinv_billed_rate;
-			
+totalBilledAmount += detail.billed_amount;
 			detail.insert();
 		}
 
 		gs.addInfoMessage(gs.getMessage('Invoice detail records generated.'));
+		
+//		var invoiceTotal = new GlideAggregate('x_175353_thriveinv_invoice_details');
+//		invoiceTotal.addAggregate('SUM', 'billed_amount');
+//		invoiceTotal.groupBy('billed_amount');
+//		invoiceTotal.query();
+//		if(invoiceTotal.next()) {
+//			var totalAmount = 0;
+//			totalAmount = invoiceTotal.getAggregate('SUM', 'billed_amount');
+//			gs.addInfoMessage(gs.getMessage('TOTAL: {0}', [totalAmount]));
+//		}
+		
+		var inv = new GlideRecord('x_175353_thriveinv_invoices');
+		inv.get(invoice.sys_id);
+		inv.te_total = totalBilledAmount;
+		inv.update();
+		
+//		gs.addInfoMessage(gs.getMessage('OTHER TOTAL: {0}', [totalBilledAmount]));
 	}
 	catch(ex) {
 		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetails: ' + ex.message);
@@ -50,13 +68,13 @@ ThriveInvoiceUtil.SetTimeInvoiced = function(invoice) {
 		te.query();
 
 		while (te.next()) {
-			var wrRate = ThriveInvoiceUtil.GetWorkRoleRate(1, te.x_175353_thriveinv_work_role, te.task.company, null, null);
+			var wrRate = ThriveInvoiceUtil.GetWorkRoleRate(1, te.x_175353_thriveinv_work_role, te.task.company, null, te.task.parent);
 			if(!wrRate) {
 				te.x_175353_thriveinv_has_billing_issue = true;
 				te.x_175353_thriveinv_adjustment_reason = 'Failed to get Work Role rate';
 			}
 			
-			var workType = ThriveInvoiceUtil.GetWorkType(2, te.x_175353_thriveinv_work_type, te.task.company, null, null);
+			var workType = ThriveInvoiceUtil.GetWorkType(2, te.x_175353_thriveinv_work_type, te.task.company, null, te.task.parent);
 			if(!workType) {
 				te.x_175353_thriveinv_has_billing_issue = true;
 				te.x_175353_thriveinv_adjustment_reason = 'Failed to get Work Type';
@@ -95,7 +113,7 @@ ThriveInvoiceUtil.GetBilledRate = function(messageOrder, wrRate, workType) {
 
 	switch(workType.price_adjustment_type.toString()) {
 		case 'adjustment':
-			returnValue = wrRate + workType.price_adjustment;
+			returnValue = parseFloat(wrRate) + parseFloat(workType.price_adjustment);
 			ThriveInvoiceUtil.AdjustmentReason.push({
 				order: messageOrder,
 				value: gs.getMessage('Rate adjusted by ${0} from Work Type', [workType.price_adjustment.toString()])
@@ -145,22 +163,40 @@ ThriveInvoiceUtil.GetWorkRoleRate = function(messageOrder, workRoleId, companyId
 		gs.addErrorMessage('There is a Time Entry with no Work Role selected.');
 		return null;
 	}
-
-	var wrRate = ThriveInvoiceUtil.GetWorkRoleRateForCompany(workRoleId, companyId);
+	
+	var wrRate;
+	
+//RISK: projectId is parent. Need to check class or other attribute to make sure this is pointing to a project. What about nested tasks? Also need to make sure Company does not get picked up off of project/contract overrides.
+	if (projectId) {
+		 wrRate = ThriveInvoiceUtil.GetWorkRoleRateForProject(workRoleId, projectId);
+	}
+	
 	if (wrRate) {
 		ThriveInvoiceUtil.AdjustmentReason.push({
 			order: messageOrder,
-			value: gs.getMessage('Work Role rate ${0} from Company Override', [wrRate])
+			value: gs.getMessage('Work Role rate ${0} from Project Override', [wrRate])
 		});
 	}
 	else {
-		wrRate = ThriveInvoiceUtil.GetWorkRoleRateDefault(workRoleId);
-		ThriveInvoiceUtil.AdjustmentReason.push({
-			order: messageOrder,
-			value: gs.getMessage('Work Role rate ${0} from Default Work Role', [wrRate])
-		});
+		if (companyId) {
+			wrRate = ThriveInvoiceUtil.GetWorkRoleRateForCompany(workRoleId, companyId);
+		}
+	
+		if (wrRate) {
+			ThriveInvoiceUtil.AdjustmentReason.push({
+				order: messageOrder,
+				value: gs.getMessage('Work Role rate ${0} from Company Override', [wrRate])
+			});
+		}
+		else {
+			wrRate = ThriveInvoiceUtil.GetWorkRoleRateDefault(workRoleId);
+			ThriveInvoiceUtil.AdjustmentReason.push({
+				order: messageOrder,
+				value: gs.getMessage('Default Work Role rate ${0}', [wrRate])
+			});
+		}
 	}
-
+	
 	return wrRate;
 };
 
@@ -170,27 +206,55 @@ ThriveInvoiceUtil.GetWorkType = function(messageOrder, workTypeId, companyId, co
 		return null;
 	}
 
-	var returnValue = ThriveInvoiceUtil.GetWorkTypeForCompany(workTypeId, companyId);
+	var returnValue;
+	
+	if (projectId) {
+		 returnValue = ThriveInvoiceUtil.GetWorkTypeForProject(workTypeId, projectId);
+	}
+	
 	if (returnValue) {
 		ThriveInvoiceUtil.AdjustmentReason.push({
 			order: messageOrder,
-			value: gs.getMessage('Work Type from Company Override')
+			value: gs.getMessage('Work Type from Project Override')
 		});
 	}
 	else {
-		returnValue = ThriveInvoiceUtil.GetWorkTypeDefault(workTypeId);
-		ThriveInvoiceUtil.AdjustmentReason.push({
-			order: messageOrder,
-			value: gs.getMessage('Work Type from Default')
-		});
+		if(companyId) {
+			returnValue = ThriveInvoiceUtil.GetWorkTypeForCompany(workTypeId, companyId);
+		}
+		
+		if (returnValue) {
+			ThriveInvoiceUtil.AdjustmentReason.push({
+				order: messageOrder,
+				value: gs.getMessage('Work Type from Company Override')
+			});
+		}
+		else {
+			returnValue = ThriveInvoiceUtil.GetWorkTypeDefault(workTypeId);
+			ThriveInvoiceUtil.AdjustmentReason.push({
+				order: messageOrder,
+				value: gs.getMessage('Work Type from Default')
+			});
+		}
 	}
 
 	return returnValue;
 };
 
+ThriveInvoiceUtil.GetWorkRoleRateForProject = function(workRoleId, projectId) {
+	var wr = new GlideRecord('x_175353_thriveinv_labor_rate_card_overrides');
+	wr.addQuery('overridden_work_role', workRoleId);
+	wr.addQuery('project', projectId);
+	wr.query();
+
+	if(wr.next()) {
+		return wr.hourly_rate;
+	}
+};
+
 ThriveInvoiceUtil.GetWorkRoleRateForCompany = function(workRoleId, companyId) {
 	var wr = new GlideRecord('x_175353_thriveinv_labor_rate_card_overrides');
-	wr.addQuery('overridden_work_type', workRoleId);
+	wr.addQuery('overridden_work_role', workRoleId);
 	wr.addQuery('company', companyId);
 	wr.query();
 
@@ -205,8 +269,19 @@ ThriveInvoiceUtil.GetWorkRoleRateDefault = function(workRoleId) {
 	return wr.hourly_rate;
 };
 
+ThriveInvoiceUtil.GetWorkTypeForProject = function(workTypeId, projectId) {
+	var wt = new GlideRecord('x_175353_thriveinv_work_type_overrides');
+	wt.addQuery('overridden_work_type', workTypeId);
+	wt.addQuery('project', projectId);
+	wt.query();
+
+	if(wt.next()) {
+		return wt;
+	}
+};
+
 ThriveInvoiceUtil.GetWorkTypeForCompany = function(workTypeId, companyId) {
-	var wt = new GlideRecord('x_175353_thriveinv_work_types');
+	var wt = new GlideRecord('x_175353_thriveinv_work_type_overrides');
 	wt.addQuery('overridden_work_type', workTypeId);
 	wt.addQuery('company', companyId);
 	wt.query();
@@ -226,13 +301,13 @@ ThriveInvoiceUtil.GetWorkTypeDefault = function(workTypeId) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-13 19:35:01</sys_created_on>
         <sys_id>ce2ab99f4fb313002e7e8020a310c743</sys_id>
-        <sys_mod_count>111</sys_mod_count>
+        <sys_mod_count>142</sys_mod_count>
         <sys_name>ThriveInvoiceUtil</sys_name>
         <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_script_include_ce2ab99f4fb313002e7e8020a310c743</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-17 22:00:45</sys_updated_on>
+        <sys_updated_on>2018-08-21 01:01:35</sys_updated_on>
     </sys_script_include>
 </record_update>

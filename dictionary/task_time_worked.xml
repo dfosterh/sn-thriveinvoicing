@@ -11,7 +11,7 @@
         <element choice="1" label="Work Role" max_length="32" name="x_175353_thriveinv_work_role" reference="fm_labor_rate_card" type="reference">
             <choice/>
         </element>
-        <element choice="1" label="Work Type" max_length="32" name="x_175353_thriveinv_work_type" reference="x_175353_thriveinv_work_types" type="reference">
+        <element choice="1" label="Work Type" max_length="32" name="x_175353_thriveinv_work_type" reference="x_175353_thriveinv_work_types" reference_qual="sys_class_name=x_175353_thriveinv_work_types^EQ" reference_qual_condition="sys_class_name=x_175353_thriveinv_work_types^EQ" type="reference">
             <choice/>
         </element>
         <index name="index">

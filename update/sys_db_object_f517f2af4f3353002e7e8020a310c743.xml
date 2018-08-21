@@ -23,14 +23,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-14 18:39:41</sys_created_on>
         <sys_id>f517f2af4f3353002e7e8020a310c743</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>Work Types</sys_name>
         <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
         <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_db_object_f517f2af4f3353002e7e8020a310c743</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-14 19:18:17</sys_updated_on>
+        <sys_updated_on>2018-08-20 15:52:54</sys_updated_on>
         <update_access>false</update_access>
         <user_role display_value="x_175353_thriveinv.user" name="x_175353_thriveinv.user">5b42751b4fb313002e7e8020a310c713</user_role>
         <ws_access>true</ws_access>
