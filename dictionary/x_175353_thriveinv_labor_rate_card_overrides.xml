@@ -5,8 +5,8 @@
         <element label="Hourly Rate" mandatory="true" max_length="20" name="hourly_rate" type="currency"/>
         <element label="Overridden Work Role" mandatory="true" max_length="32" name="overridden_work_role" reference="fm_labor_rate_card" type="reference"/>
         <element dependent="company" dependent_on_field="company" label="Project" max_length="32" name="project" reference="pm_project" type="reference" use_dependent_field="true"/>
-        <element label="Rate Code" max_length="40" name="rate_code" type="string"/>
-        <element label="Rate Type" max_length="32" name="rate_type" reference="rate_type" type="reference"/>
+        <element label="Rate Code" max_length="40" name="rate_code" read_only="true" type="string"/>
+        <element label="Rate Type" max_length="32" name="rate_type" read_only="true" reference="rate_type" type="reference"/>
         <index name="index">
             <element name="rate_type"/>
         </index>

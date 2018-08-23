@@ -19,7 +19,7 @@ ThriveInvoiceUtil.SetInvoiceDetails = function(invoice) {
 		priorDetail.addQuery('invoice', invoice.sys_id);
 		priorDetail.deleteMultiple();
 
-var totalBilledAmount = 0;
+		var totalBilledAmount = 0;
 		while (te.next()) {
 			var detail = new GlideRecord('x_175353_thriveinv_invoice_details');
 			detail.initialize();
@@ -32,12 +32,13 @@ var totalBilledAmount = 0;
 			detail.billed_hours = te.x_175353_thriveinv_billed_hours;
 			detail.billed_rate = te.x_175353_thriveinv_billed_rate;
 			detail.billed_amount = te.x_175353_thriveinv_billed_hours * te.x_175353_thriveinv_billed_rate;
-totalBilledAmount += detail.billed_amount;
+			totalBilledAmount += detail.billed_amount;
 			detail.insert();
 		}
 
 		gs.addInfoMessage(gs.getMessage('Invoice detail records generated.'));
 		
+//if I want to use an aggregate select method instead, it's something like this:
 //		var invoiceTotal = new GlideAggregate('x_175353_thriveinv_invoice_details');
 //		invoiceTotal.addAggregate('SUM', 'billed_amount');
 //		invoiceTotal.groupBy('billed_amount');
@@ -52,8 +53,6 @@ totalBilledAmount += detail.billed_amount;
 		inv.get(invoice.sys_id);
 		inv.te_total = totalBilledAmount;
 		inv.update();
-		
-//		gs.addInfoMessage(gs.getMessage('OTHER TOTAL: {0}', [totalBilledAmount]));
 	}
 	catch(ex) {
 		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetails: ' + ex.message);
@@ -256,6 +255,8 @@ ThriveInvoiceUtil.GetWorkRoleRateForCompany = function(workRoleId, companyId) {
 	var wr = new GlideRecord('x_175353_thriveinv_labor_rate_card_overrides');
 	wr.addQuery('overridden_work_role', workRoleId);
 	wr.addQuery('company', companyId);
+	wr.addQuery('contract', null);
+	wr.addQuery('project', null);
 	wr.query();
 
 	if(wr.next()) {
@@ -284,6 +285,8 @@ ThriveInvoiceUtil.GetWorkTypeForCompany = function(workTypeId, companyId) {
 	var wt = new GlideRecord('x_175353_thriveinv_work_type_overrides');
 	wt.addQuery('overridden_work_type', workTypeId);
 	wt.addQuery('company', companyId);
+	wt.addQuery('contract', null);
+	wt.addQuery('project', null);
 	wt.query();
 
 	if(wt.next()) {
@@ -301,13 +304,13 @@ ThriveInvoiceUtil.GetWorkTypeDefault = function(workTypeId) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-13 19:35:01</sys_created_on>
         <sys_id>ce2ab99f4fb313002e7e8020a310c743</sys_id>
-        <sys_mod_count>142</sys_mod_count>
+        <sys_mod_count>144</sys_mod_count>
         <sys_name>ThriveInvoiceUtil</sys_name>
         <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_script_include_ce2ab99f4fb313002e7e8020a310c743</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-21 01:01:35</sys_updated_on>
+        <sys_updated_on>2018-08-23 15:37:51</sys_updated_on>
     </sys_script_include>
 </record_update>

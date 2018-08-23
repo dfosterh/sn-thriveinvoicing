@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field>overridden_work_role</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>OverriddenWorkRoleChanged</name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+	if (isLoading || newValue === '') {
+		return;
+	}
+
+	var ga = new GlideAjax('GetFormDefaultsService');
+	ga.addParam('sysparm_name', 'getOverriddenWorkRole');
+	ga.addParam('sysparm_sys_id', newValue);
+	ga.getXML(InitializeForm);
+ 
+	function InitializeForm(response) {
+		var answer = response.responseXML.documentElement.getAttribute("answer");
+
+		var responseObject = JSON.parse(answer);
+		g_form.setValue('name', responseObject.name);
+		g_form.setValue('rate_code', responseObject.rate_code);
+		g_form.setValue('rate_type', responseObject.rate_type);
+		
+		//don't update if record already had overrides
+		if (!oldValue) {
+			g_form.setValue('short_description', responseObject.short_description);
+			g_form.setValue('hourly_rate', responseObject.hourly_rate);
+			}
+		}
+	}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-08-21 21:10:27</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>e79bdbf94f0423002e7e8020a310c717</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>OverriddenWorkRoleChanged</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+        <sys_update_name>sys_script_client_e79bdbf94f0423002e7e8020a310c717</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-08-21 21:26:16</sys_updated_on>
+        <table>x_175353_thriveinv_labor_rate_card_overrides</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>
