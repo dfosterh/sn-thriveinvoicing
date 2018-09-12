@@ -17,9 +17,9 @@
         <sys_id>d2359e574f3713002e7e8020a310c72b</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Time Worked</sys_name>
-        <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+        <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
-        <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+        <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_relationship_d2359e574f3713002e7e8020a310c72b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2018-08-13 21:33:44</sys_updated_on>
@@ -27,18 +27,18 @@
     <sys_translated_text action="delete_multiple" query="documentkey=d2359e574f3713002e7e8020a310c72b"/>
     <sys_ui_related_list_relationship_entry action="INSERT_OR_UPDATE">
         <filter/>
-        <list_id display_value="Incident - Default view" name="incident" related_list="NULL" sys_domain="global" view="Default view">5b5d4e86c3c103009f93dfdc64d3ae58</list_id>
+        <list_id display_value="Incident - Default view" name="incident" related_list="NULL" sys_domain="global" view="Default view">8c98cb5b4f1423002e7e8020a310c7cb</list_id>
         <order_by/>
         <position>7</position>
         <related_list>REL:d2359e574f3713002e7e8020a310c72b</related_list>
         <sys_class_name>sys_ui_related_list_relationship_entry</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2018-08-13 21:33:44</sys_created_on>
-        <sys_id>b57512974f3713002e7e8020a310c7fb</sys_id>
+        <sys_created_on>2018-09-07 21:48:22</sys_created_on>
+        <sys_id>8498cb5b4f1423002e7e8020a310c7cf</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_relationship display_value="Time Worked">d2359e574f3713002e7e8020a310c72b</sys_relationship>
-        <sys_ui_related_list display_value="Incident - Default view" name="incident" related_list="NULL" sys_domain="global" view="Default view">5b5d4e86c3c103009f93dfdc64d3ae58</sys_ui_related_list>
+        <sys_ui_related_list display_value="Incident - Default view" name="incident" related_list="NULL" sys_domain="global" view="Default view">8c98cb5b4f1423002e7e8020a310c7cb</sys_ui_related_list>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-13 21:33:44</sys_updated_on>
+        <sys_updated_on>2018-09-07 21:48:22</sys_updated_on>
     </sys_ui_related_list_relationship_entry>
 </record_update>

@@ -56,6 +56,20 @@
             <sys_user/>
             <type/>
         </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>mrr_total</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-09-04 13:47:40</sys_created_on>
+            <sys_id>ddcd359a4f1023002e7e8020a310c791</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoices" sys_domain="global" view="Default view">e33b4edb4ff313002e7e8020a310c75f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-09-04 13:47:40</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
         <sys_ui_section action="INSERT_OR_UPDATE">
             <caption/>
             <header>false</header>
@@ -70,9 +84,9 @@
             <sys_mod_count>0</sys_mod_count>
             <sys_name>x_175353_thriveinv_invoices</sys_name>
             <sys_overrides/>
-            <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+            <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
             <sys_policy/>
-            <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+            <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
             <sys_update_name>sys_ui_section_e33b4edb4ff313002e7e8020a310c75f</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2018-08-13 20:49:04</sys_updated_on>

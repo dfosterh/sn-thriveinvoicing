@@ -56,9 +56,9 @@
         <sys_id>1452751b4fb313002e7e8020a310c7c7</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Number</sys_name>
-        <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+        <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
-        <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+        <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_dictionary_x_175353_thriveinv_invoices_number</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2018-08-13 19:00:10</sys_updated_on>

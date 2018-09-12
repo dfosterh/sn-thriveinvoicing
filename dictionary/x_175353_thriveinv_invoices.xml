@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element label="Invoices" max_length="40" name="x_175353_thriveinv_invoices" type="collection">
         <element label="Customer" mandatory="true" max_length="32" name="customer" reference="core_company" reference_qual="customer=true^sys_domain!=global^EQ" reference_qual_condition="customer=true^sys_domain!=global^EQ" type="reference"/>
+        <element label="MRR Total" max_length="20" name="mrr_total" read_only="true" type="currency"/>
         <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
         <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
         <element label="Domain" max_length="32" name="sys_domain" type="domain_id"/>
         <element label="Domain Path" max_length="255" name="sys_domain_path" type="domain_path"/>
-        <element label="T&amp;E Total" max_length="20" name="te_total" read_only="true" type="decimal"/>
+        <element label="T&amp;E Total" max_length="20" name="te_total" read_only="true" type="currency"/>
         <index name="index">
             <element name="sys_domain"/>
         </index>

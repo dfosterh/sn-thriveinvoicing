@@ -11,48 +11,142 @@ ThriveInvoiceUtil.AdjustmentReason = [];
 
 ThriveInvoiceUtil.SetInvoiceDetails = function(invoice) {
 	try {
-		var te = new GlideRecord('task_time_worked');
-		te.addQuery('x_175353_thriveinv_invoice', invoice.sys_id);
-		te.query();
-		
 		var priorDetail = new GlideRecord('x_175353_thriveinv_invoice_details');
 		priorDetail.addQuery('invoice', invoice.sys_id);
 		priorDetail.deleteMultiple();
 
-		var totalBilledAmount = 0;
+		var teTotal = ThriveInvoiceUtil.SetInvoiceDetailsTE(invoice.sys_id);
+		var mrrTotal = ThriveInvoiceUtil.SetInvoiceDetailsMRR(invoice.sys_id, invoice.customer.sys_id);
+		
+		gs.addInfoMessage(gs.getMessage('Invoice detail records generated.'));
+		
+		var inv = new GlideRecord('x_175353_thriveinv_invoices');
+		inv.get(invoice.sys_id);
+		inv.te_total = teTotal;
+		inv.mrr_total = mrrTotal;
+		inv.update();
+	}
+	catch(ex) {
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetails: ' + ex.message);
+	}
+};
+
+ThriveInvoiceUtil.SetInvoiceDetailsTE = function(invoiceID) {
+	try {
+		var te = new GlideRecord('task_time_worked');
+		te.addQuery('x_175353_thriveinv_invoice', invoiceID);
+		te.query();
+
+		var returnValue = 0;
 		while (te.next()) {
 			var detail = new GlideRecord('x_175353_thriveinv_invoice_details');
 			detail.initialize();
 			
-			detail.invoice = invoice.sys_id;
-			detail.time_entry = te.sys_id;
-			detail.sourceidlink = '/task_time_worked' + '.do?sys_id=' + te.sys_id;
+			detail.invoice = invoiceID;
+//			detail.time_entry = te.sys_id;
+			detail.sourceidlink = '/task_time_worked.do?sys_id=' + te.sys_id;
 			detail.item = 'Time Entry';
 			detail.detail = te.comments;
 			detail.billed_hours = te.x_175353_thriveinv_billed_hours;
 			detail.billed_rate = te.x_175353_thriveinv_billed_rate;
 			detail.billed_amount = te.x_175353_thriveinv_billed_hours * te.x_175353_thriveinv_billed_rate;
-			totalBilledAmount += detail.billed_amount;
+			returnValue += parseFloat(detail.billed_amount);
+			
 			detail.insert();
 		}
 
-		gs.addInfoMessage(gs.getMessage('Invoice detail records generated.'));
+		gs.addInfoMessage(gs.getMessage('TE Invoice detail records generated for {0}.', [returnValue]));
 		
-//if I want to use an aggregate select method instead, it's something like this:
-//		var invoiceTotal = new GlideAggregate('x_175353_thriveinv_invoice_details');
-//		invoiceTotal.addAggregate('SUM', 'billed_amount');
-//		invoiceTotal.groupBy('billed_amount');
-//		invoiceTotal.query();
-//		if(invoiceTotal.next()) {
-//			var totalAmount = 0;
-//			totalAmount = invoiceTotal.getAggregate('SUM', 'billed_amount');
-//			gs.addInfoMessage(gs.getMessage('TOTAL: {0}', [totalAmount]));
-//		}
+		return returnValue;
+	}
+	catch(ex) {
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetails: ' + ex.message);
+	}
+};
+
+ThriveInvoiceUtil.SetInvoiceDetailsMRR = function(invoiceID, companyID) {
+	try {
+		var mrr = new GlideAggregate('x_175353_contracts_m2m_configuratio_entitlements');
+		mrr.addQuery('configuration_item.company.sys_id', companyID);
+
+		mrr.addAggregate('COUNT');
+		mrr.setGroup(true);
+		mrr.groupBy('entitlements');
+		mrr.query();
+
+		var returnValue = 0;
+		while (mrr.next()) {
+			var amount = mrr.getAggregate('COUNT');
+			
+			var detail = new GlideRecord('x_175353_thriveinv_invoice_details');
+			detail.initialize();
+			
+			detail.invoice = invoiceID;
+			detail.sourceidlink = '/x_175353_contracts_entitlement.do?sys_id=' + mrr.entitlements.sys_id;
+			detail.item = mrr.entitlements.description; //ent.entitlements.service_portfolio_item.sku;
+			detail.detail = 'Billed for next month';
+			detail.billed_hours = amount;
+			detail.billed_rate = mrr.entitlements.unit_price;
+			detail.billed_amount = amount * mrr.entitlements.unit_price;
+			returnValue += parseFloat(detail.billed_amount);
+			
+			detail.insert();
+		}
+
+		gs.addInfoMessage(gs.getMessage('MRR Invoice detail records generated for {0}.', [returnValue]));
 		
-		var inv = new GlideRecord('x_175353_thriveinv_invoices');
-		inv.get(invoice.sys_id);
-		inv.te_total = totalBilledAmount;
-		inv.update();
+		return returnValue;
+	}
+	catch(ex) {
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetails: ' + ex.message);
+	}
+};
+
+ThriveInvoiceUtil.SetInvoiceDetailsMRRProrated = function(invoiceID, companyID) {
+	try {
+		/*
+		Start = earliest of Date Provisioned or created (this will count when provisioned, even if Date Provisioned is pushed later) where event <> deleted
+		End = latest created where event = deleted
+		Where: CI, Date Provisioned or created in period
+		*/
+
+var startPeriodDate = Date.parse('8/15/2018');
+var endPeriodDate = Date.now();
+
+		var mrr = new GlideRecord('x_175353_contracts_entitlement_history');
+		mrr.addQuery('configuration_item.company.sys_id', companyID);
+		mrr.addQuery('granted_to', 'CI');
+
+/*		var dateStart = BOM
+		var dateEnt = EOM
+
+order by entitlements, created
+if not deleted, reset dateStart to earliest
+if deleted, reset endDate
+write and restart dates
+*/		
+		var returnValue = 0;
+		while (mrr.next()) {
+			var amount = mrr.getAggregate('COUNT');
+			
+			var detail = new GlideRecord('x_175353_thriveinv_invoice_details');
+			detail.initialize();
+			
+			detail.invoice = invoiceID;
+			detail.sourceidlink = '/x_175353_contracts_entitlement.do?sys_id=' + mrr.entitlements.sys_id;
+			detail.item = mrr.entitlements.description; //ent.entitlements.service_portfolio_item.sku;
+			detail.detail = 'Billed for next month';
+			detail.billed_hours = amount;
+			detail.billed_rate = mrr.entitlements.unit_price;
+			detail.billed_amount = amount * mrr.entitlements.unit_price;
+			returnValue += parseFloat(detail.billed_amount);
+			
+			detail.insert();
+		}
+
+		gs.addInfoMessage(gs.getMessage('MRR Invoice detail records generated for {0}.', [returnValue]));
+		
+		return returnValue;
 	}
 	catch(ex) {
 		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetails: ' + ex.message);
@@ -304,13 +398,13 @@ ThriveInvoiceUtil.GetWorkTypeDefault = function(workTypeId) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-13 19:35:01</sys_created_on>
         <sys_id>ce2ab99f4fb313002e7e8020a310c743</sys_id>
-        <sys_mod_count>144</sys_mod_count>
+        <sys_mod_count>186</sys_mod_count>
         <sys_name>ThriveInvoiceUtil</sys_name>
-        <sys_package display_value="ThriveInvoicing" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+        <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy>read</sys_policy>
-        <sys_scope display_value="ThriveInvoicing">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+        <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_script_include_ce2ab99f4fb313002e7e8020a310c743</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-23 15:37:51</sys_updated_on>
+        <sys_updated_on>2018-09-04 14:59:07</sys_updated_on>
     </sys_script_include>
 </record_update>
