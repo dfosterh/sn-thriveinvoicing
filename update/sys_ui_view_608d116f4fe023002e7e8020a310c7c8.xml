@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_view">
+    <sys_ui_view action="INSERT_OR_UPDATE">
+        <group/>
+        <hidden>false</hidden>
+        <name>Manual_Entry</name>
+        <roles/>
+        <sys_class_name>sys_ui_view</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-09-20 18:54:49</sys_created_on>
+        <sys_id>608d116f4fe023002e7e8020a310c7c8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Manual_entry</sys_name>
+        <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+        <sys_update_name>sys_ui_view_608d116f4fe023002e7e8020a310c7c8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-09-20 18:54:49</sys_updated_on>
+        <title>Manual_entry</title>
+        <user/>
+    </sys_ui_view>
+</record_update>

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="te_total" label="T&amp;E Total" language="en" table="x_175353_thriveinv_invoices">
+    <sys_documentation element="invoice_type" label="Invoice Type" language="en" table="x_175353_thriveinv_invoices">
         <sys_documentation action="INSERT_OR_UPDATE">
-            <element>te_total</element>
+            <element>invoice_type</element>
             <help/>
             <hint/>
-            <label>T&amp;E Total</label>
+            <label>Invoice Type</label>
             <language>en</language>
             <name>x_175353_thriveinv_invoices</name>
-            <plural>T&amp;E Totals</plural>
+            <plural>Invoice Types</plural>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-21 00:55:54</sys_created_on>
-            <sys_id>37d647254fc423002e7e8020a310c7d0</sys_id>
+            <sys_created_on>2018-10-03 01:29:17</sys_created_on>
+            <sys_id>44eae46b4f7463002e7e8020a310c784</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_name>T&amp;E Total</sys_name>
+            <sys_name>Invoice Type</sys_name>
             <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
             <sys_policy/>
             <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
-            <sys_update_name>sys_documentation_x_175353_thriveinv_invoices_te_total_en</sys_update_name>
+            <sys_update_name>sys_documentation_x_175353_thriveinv_invoices_invoice_type_en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-21 00:55:54</sys_updated_on>
+            <sys_updated_on>2018-10-03 01:29:17</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>
