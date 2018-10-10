@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="be73d3694f8163002e7e8020a310c738" sys_domain="774190f01f1310005a3637b8ec8b70ef" table="core_company" version="3">
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>core_company</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-09 18:53:47</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>be73d3694f8163002e7e8020a310c738</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>core_company</sys_name>
+            <sys_overrides display_value="core_company" name="core_company" sys_domain="global" view="474ba1b54f3113002e7e8020a310c70a">0f7cae60c3132100d23cdb1122d3ae9c</sys_overrides>
+            <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+            <sys_update_name>sys_ui_form_sections_be73d3694f8163002e7e8020a310c738</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-09 18:53:47</sys_updated_on>
+            <sys_user/>
+            <view display_value="Finance" name="finance">474ba1b54f3113002e7e8020a310c70a</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

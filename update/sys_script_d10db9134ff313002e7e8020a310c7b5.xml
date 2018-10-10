@@ -18,7 +18,7 @@
         <filter_condition/>
         <is_rest>false</is_rest>
         <message/>
-        <name>SetTEAttributesFromTask</name>
+        <name>iuTimeWorkedSetTaskNotes</name>
         <order>200</order>
         <priority>100</priority>
         <rest_method/>
@@ -68,15 +68,15 @@
         <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
         <sys_domain_path>!!!/</sys_domain_path>
         <sys_id>d10db9134ff313002e7e8020a310c7b5</sys_id>
-        <sys_mod_count>29</sys_mod_count>
-        <sys_name>SetTEAttributesFromTask</sys_name>
+        <sys_mod_count>30</sys_mod_count>
+        <sys_name>iuTimeWorkedSetTaskNotes</sys_name>
         <sys_overrides/>
         <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
         <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_script_d10db9134ff313002e7e8020a310c7b5</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-10-03 21:13:14</sys_updated_on>
+        <sys_updated_on>2018-10-10 14:45:02</sys_updated_on>
         <template/>
         <when>before</when>
     </sys_script>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Thrive Invoicing" section_id="9ac51fe94f8163002e7e8020a310c736" sys_domain="774190f01f1310005a3637b8ec8b70ef" table="customer_account" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-09 19:03:53</sys_created_on>
+            <sys_id>66c51fe94f8163002e7e8020a310c762</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="customer_account" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">9ac51fe94f8163002e7e8020a310c736</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-09 19:03:53</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>x_175353_thriveinv_include_prorated_provisions</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-09 19:03:53</sys_created_on>
+            <sys_id>e6c51fe94f8163002e7e8020a310c762</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="customer_account" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">9ac51fe94f8163002e7e8020a310c736</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-09 19:03:53</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>x_175353_thriveinv_include_prorated_deprovisions</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-09 19:03:53</sys_created_on>
+            <sys_id>6ac51fe94f8163002e7e8020a310c762</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="customer_account" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">9ac51fe94f8163002e7e8020a310c736</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-09 19:03:53</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Thrive Invoicing</caption>
+            <header>false</header>
+            <name>customer_account</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-09 19:03:52</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>9ac51fe94f8163002e7e8020a310c736</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Thrive Invoicing</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+            <sys_update_name>sys_ui_section_9ac51fe94f8163002e7e8020a310c736</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-09 19:03:52</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

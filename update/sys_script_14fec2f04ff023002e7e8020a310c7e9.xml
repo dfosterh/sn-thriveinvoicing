@@ -18,7 +18,7 @@
         <filter_condition/>
         <is_rest>false</is_rest>
         <message/>
-        <name>CalculateNewInvoice</name>
+        <name>iInvoicesCalculate</name>
         <order>100</order>
         <priority>100</priority>
         <rest_method/>
@@ -38,15 +38,15 @@
         <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
         <sys_domain_path>!!!/</sys_domain_path>
         <sys_id>14fec2f04ff023002e7e8020a310c7e9</sys_id>
-        <sys_mod_count>10</sys_mod_count>
-        <sys_name>CalculateNewInvoice</sys_name>
+        <sys_mod_count>12</sys_mod_count>
+        <sys_name>iInvoicesCalculate</sys_name>
         <sys_overrides/>
         <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
         <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_script_14fec2f04ff023002e7e8020a310c7e9</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-09-25 02:25:36</sys_updated_on>
+        <sys_updated_on>2018-10-10 14:43:30</sys_updated_on>
         <template/>
         <when>after</when>
     </sys_script>

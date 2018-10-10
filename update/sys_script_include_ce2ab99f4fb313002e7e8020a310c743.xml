@@ -26,15 +26,15 @@ ThriveInvoiceUtil.CalculateInvoice = function(invoice) {
 				teTotal = ThriveInvoiceUtil.SetInvoiceDetailsTE(invoice.sys_id);
 				break;
 			case 'MRR':
-//create function
-				var te = new GlideRecord('task_time_worked');
-				te.addQuery('x_175353_thriveinv_invoice', invoice.sys_id);
-				te.deleteMultiple();
-
-				mrrTotal = ThriveInvoiceUtil.SetInvoiceDetailsMRR(invoice.sys_id, invoice.customer.sys_id);
+				ThriveInvoiceUtil.ReleaseTimeEntries(invoice.sys_id);
+				mrrTotal = ThriveInvoiceUtil.SetInvoiceDetailsMRR(invoice.sys_id, invoice.customer.sys_id, invoice.invoice_date);
 				if(invoice.include_prorated_provisions) {
 					mrrTotalProrates = ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds(invoice.sys_id, invoice.customer.sys_id, invoice.invoice_date);
 				}
+				break;
+			case 'MRRP':
+				ThriveInvoiceUtil.ReleaseTimeEntries(invoice.sys_id);
+				mrrTotalProrates = ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds(invoice.sys_id, invoice.customer.sys_id, invoice.invoice_date);
 				break;
 			case 'project':
 				gs.addErrorMessage('I don\'t know how to calculate projects yet.');
@@ -56,6 +56,17 @@ ThriveInvoiceUtil.CalculateInvoice = function(invoice) {
 		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetails: ' + ex.message);
 	}
 };
+
+ThriveInvoiceUtil.ReleaseTimeEntries = function(invoiceID) {
+	try {
+		var te = new GlideRecord('task_time_worked');
+		te.addQuery('x_175353_thriveinv_invoice', invoiceID);
+		te.setValue('x_175353_thriveinv_invoice', null);
+		te.updateMultiple();
+	}
+	catch(ex) {
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetails: ' + ex.message);
+	}};
 
 ThriveInvoiceUtil.GetManualAdjustmentTotal = function(invoiceID) {
 	try {
@@ -95,10 +106,10 @@ ThriveInvoiceUtil.SetInvoiceDetailsTE = function(invoiceID) {
 			detail.sourceidlink = '/task_time_worked.do?sys_id=' + te.sys_id;
 			detail.item = 'Time Entry';
 			detail.detail = te.comments;
-			detail.billed_hours = te.x_175353_thriveinv_billed_hours;
+			detail.billed_quantity = te.x_175353_thriveinv_billed_hours;
 			detail.billed_rate = te.x_175353_thriveinv_billed_rate;
-			detail.billed_amount = te.x_175353_thriveinv_billed_hours * te.x_175353_thriveinv_billed_rate;
-			returnValue += parseFloat(detail.billed_amount);
+			detail.billed_amount = PerfectRound(te.x_175353_thriveinv_billed_hours * te.x_175353_thriveinv_billed_rate, 2);
+			returnValue += PerfectRound(detail.billed_amount, 2);
 			
 			detail.insert();
 		}
@@ -112,24 +123,33 @@ ThriveInvoiceUtil.SetInvoiceDetailsTE = function(invoiceID) {
 	}
 };
 
-ThriveInvoiceUtil.SetInvoiceDetailsMRR = function(invoiceID, companyID) {
+ThriveInvoiceUtil.SetInvoiceDetailsMRR = function(invoiceID, companyID, invoiceDate) {
 	try {
-		//should this just be off the count I'm keeping on the entitlement? If so, need reconciliation report
-		//also, OOB entitlement-contract relationship does not cascade delete. Need to make sure contract is still active
+		endPeriodDate = GetEOM(invoiceDate, -1);
+		gs.debug(gs.getMessage('Calculating RMM provisioned by {0}', [endPeriodDate]));
+
+		//OOB entitlement-contract relationship does not cascade delete. Need to make sure contract is still active
 		var mrr = new GlideAggregate('x_175353_contracts_m2m_configuratio_entitlements');
-		mrr.addQuery('configuration_item.company.sys_id', companyID);
+		mrr.addQuery('entitlement.contract.account.sys_id', companyID);
+		mrr.addQuery('entitlement.contract.state', 'Active');
+		//Not using x_175353_contracts_provisioned_qty because current count is not the same as count prior to this month
+		mrr.addQuery('date_provisioned', '<=', endPeriodDate.getDate().getDisplayValue());
 		mrr.addAggregate('COUNT');
 		mrr.setGroup(true);
 		mrr.groupBy('entitlement');
 		mrr.query();
 
 		var returnValue = 0;
+		var qty = 0;
+		
 		while (mrr.next()) {
-			//var ent = new GlideRecord('service_entitlement');
-			//ent.get(mrr.entitlement);
+			if (mrr.entitlement.x_175353_contracts_bill_contracted_qty) {
+				qty = mrr.entitlement.x_175353_contracts_contract_quantity;
+			}
+			else {
+				qty = mrr.getAggregate('COUNT');
+			}
 			
-			var qty = mrr.getAggregate('COUNT');
-
 			var detail = new GlideRecord('x_175353_thriveinv_invoice_details');
 			detail.initialize();
 			
@@ -140,10 +160,10 @@ ThriveInvoiceUtil.SetInvoiceDetailsMRR = function(invoiceID, companyID) {
 			var desc = mrr.entitlement.x_175353_contracts_description;
 			detail.item =  sku + ': ' + desc;
 			detail.detail = 'Billed for next month';
-			detail.billed_hours = qty;
+			detail.billed_quantity = qty;
 			detail.billed_rate = mrr.entitlement.x_175353_contracts_contracted_price;
-			detail.billed_amount = qty * mrr.entitlement.x_175353_contracts_contracted_price;
-			returnValue += parseFloat(detail.billed_amount);
+			detail.billed_amount = PerfectRound(qty * mrr.entitlement.x_175353_contracts_contracted_price, 2);
+			returnValue += PerfectRound(detail.billed_amount, 2);
 			
 			detail.insert();
 		}
@@ -163,40 +183,42 @@ ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds = function(invoiceID, company
 		TODO: What if SKU/Device pair on prior period invoice, which means this month is already paid for?
 			This will happen, but could be an acceptible initial bug. Need test data spanning multiple months
 		*/
-		var startPeriodDate = new GlideDateTime(invoiceDate);
-		var endPeriodDate = new GlideDateTime(invoiceDate);
-		startPeriodDate.addMonthsUTC(-1);
-		endPeriodDate.addMonthsUTC(-1);
-		startPeriodDate.setDayOfMonthUTC(1);
-		endPeriodDate.setDayOfMonthUTC(32);
+		var startPeriodDate = GetBOM(invoiceDate, -1);
+		var endPeriodDate = GetEOM(invoiceDate, -1);
 		gs.debug(gs.getMessage('Calculating prorated provisionings for {0} - {1}', [startPeriodDate, endPeriodDate]));
 
 		var mrra = new GlideAggregate('x_175353_contracts_entitlement_history');
 		mrra.addQuery('company.sys_id', companyID);
+		mrra.addQuery('entitlement.contract.state', 'Active');
 		mrra.addQuery('event', '!=', 'delete');
 		mrra.addQuery('date_provisioned', '>=', startPeriodDate.getDate().getDisplayValue());
 		mrra.addQuery('date_provisioned', '<=', endPeriodDate.getDate().getDisplayValue());
+		mrra.addQuery('ci_entitlement.date_provisioned', '>=', startPeriodDate.getDate().getDisplayValue());
+		mrra.addQuery('ci_entitlement.date_provisioned', '<=', endPeriodDate.getDate().getDisplayValue());
 		//this assumes it's a CI entitlement. Also, will need to be sensitive to include_prorated_deprovisions if we implement that
 		mrra.addNotNullQuery('ci_entitlement');
 		mrra.setGroup(true);
-		mrra.groupBy('entitlement_sys_id');
+		mrra.groupBy('entitlement');
 		mrra.groupBy('granted_to_sys_id');
 		mrra.addAggregate('MIN', 'date_provisioned');
 		mrra.query();
 		
 		var returnValue = 0;
 		while (mrra.next()) {
+			if(mrra.entitlement.x_175353_contracts_bill_contracted_qty) {
+				continue;
+			}
+
 			var mrrp = new GlideRecord('x_175353_contracts_entitlement_history');
 			mrrp.addQuery('event', '!=', 'delete');
-			mrrp.addQuery('entitlement_sys_id', mrra.entitlement_sys_id);
+			mrrp.addQuery('entitlement_sys_id', mrra.entitlement.sys_id);
 			mrrp.addQuery('granted_to_sys_id', mrra.granted_to_sys_id);
 			mrrp.addQuery('date_provisioned', mrra.getAggregate('MIN', 'date_provisioned').substring(0, 10));
 			mrrp.query();
 			
 			if(mrrp.next()) {
-//Jacob: UTC shifts this 4-5-hours ealier than midnight. Is this the best way to convert?
+//what if earliest provision history date is before current M2M provision date. Which wins?
 				var dtProvisioned = new GlideDateTime(mrrp.date_provisioned.getDisplayValue() + ' 12:00:00');
-//if we are allowing mid-month delete, lookup last delete after date provisioned
 				var totalDays = dtProvisioned.getDaysInMonthLocalTime();
 				var day = dtProvisioned.getDayOfMonthLocalTime();
 				var rate = (totalDays - day + 1) / totalDays;
@@ -206,15 +228,15 @@ ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds = function(invoiceID, company
 
 				detail.is_manual_entry = false;
 				detail.invoice = invoiceID;
-				detail.sourceidlink = '/service_entitlement.do?sys_id=' + mrrp.entitlement_sys_id;
+				detail.sourceidlink = '/service_entitlement.do?sys_id=' + mrrp.entitlement.sys_id;
 				var sku = mrrp.business_service_name;
 				var desc = mrrp.entitlement_description;
 				detail.item = sku + ': ' + desc;
-				detail.detail = 'Provisioned to ' + mrrp.granted_to_name + ' on ' + mrrp.date_provisioned.getDisplayValue();
-				detail.billed_hours = rate;
+				detail.detail = 'Provisioned to ' + mrrp.granted_to_name + ' on ' + mrrp.date_provisioned.toString();
+				detail.billed_quantity = rate;
 				detail.billed_rate = mrrp.contracted_price;
-				detail.billed_amount = rate * mrrp.contracted_price;
-				returnValue += parseFloat(detail.billed_amount);
+				detail.billed_amount = PerfectRound(rate * mrrp.contracted_price, 2);
+				returnValue += PerfectRound(detail.billed_amount, 2);
 
 				detail.insert();
 			}
@@ -232,6 +254,7 @@ ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds = function(invoiceID, company
 ThriveInvoiceUtil.SetTimeInvoiced = function(invoice) {
 	try {
 		var te = new GlideRecord('task_time_worked');
+//add Service Location filter
 		var qry = gs.getMessage('task.sys_domain={0}^x_175353_thriveinv_invoiceISEMPTY^ORx_175353_thriveinv_invoice={1}', [invoice.sys_domain, invoice.sys_id]);
 		te.addQuery(qry);
 		te.query();
@@ -469,18 +492,38 @@ ThriveInvoiceUtil.GetWorkTypeDefault = function(workTypeId) {
 	wt.get(workTypeId);
 	return wt;
 };
+
+function PerfectRound(num, places) {
+	return + (Math.round(num + "e+" + places)  + "e-" + places);
+}
+
+function GetEOM(date, offset) {
+	var returnValue = new GlideDateTime(date);
+	returnValue.addMonthsUTC(offset);
+	returnValue.setDayOfMonthUTC(32);
+	
+	return returnValue;
+}
+
+function GetBOM(date, offset) {
+	var returnValue = new GlideDateTime(date);
+	returnValue.addMonthsUTC(offset);
+	returnValue.setDayOfMonthUTC(1);
+	
+	return returnValue;
+}
 ]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-13 19:35:01</sys_created_on>
         <sys_id>ce2ab99f4fb313002e7e8020a310c743</sys_id>
-        <sys_mod_count>323</sys_mod_count>
+        <sys_mod_count>348</sys_mod_count>
         <sys_name>ThriveInvoiceUtil</sys_name>
         <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_script_include_ce2ab99f4fb313002e7e8020a310c743</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-10-04 21:47:03</sys_updated_on>
+        <sys_updated_on>2018-10-10 14:34:20</sys_updated_on>
     </sys_script_include>
 </record_update>

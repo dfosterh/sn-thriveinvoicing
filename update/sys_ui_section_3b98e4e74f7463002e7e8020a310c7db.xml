@@ -1,114 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
     <sys_ui_section caption="" section_id="3b98e4e74f7463002e7e8020a310c7db" sys_domain="774190f01f1310005a3637b8ec8b70ef" table="x_175353_thriveinv_invoices" version="3" view="">
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>number</element>
+            <element>invoice_date</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-10-04 18:49:12</sys_created_on>
-            <sys_id>7672a9c44fc123002e7e8020a310c7fd</sys_id>
+            <sys_created_on>2018-10-10 14:28:01</sys_created_on>
+            <sys_id>5b30a73d4f0123002e7e8020a310c769</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoices" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">3b98e4e74f7463002e7e8020a310c7db</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-10-04 18:49:12</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>invoice_type</element>
-            <position>1</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-10-04 18:49:12</sys_created_on>
-            <sys_id>7272a9c44fc123002e7e8020a310c7fe</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoices" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">3b98e4e74f7463002e7e8020a310c7db</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-10-04 18:49:12</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>invoice_date</element>
-            <position>2</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-10-04 18:49:12</sys_created_on>
-            <sys_id>f272a9c44fc123002e7e8020a310c7fe</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoices" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">3b98e4e74f7463002e7e8020a310c7db</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-10-04 18:49:12</sys_updated_on>
+            <sys_updated_on>2018-10-10 14:28:01</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>customer</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-10 14:28:01</sys_created_on>
+            <sys_id>db30a73d4f0123002e7e8020a310c769</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoices" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">3b98e4e74f7463002e7e8020a310c7db</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-10 14:28:01</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>billing_location</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-10 14:28:01</sys_created_on>
+            <sys_id>5f30a73d4f0123002e7e8020a310c769</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoices" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">3b98e4e74f7463002e7e8020a310c7db</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-10 14:28:01</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>service_location</element>
             <position>3</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-10-04 18:49:12</sys_created_on>
-            <sys_id>7672a9c44fc123002e7e8020a310c7fe</sys_id>
+            <sys_created_on>2018-10-10 14:28:01</sys_created_on>
+            <sys_id>df30a73d4f0123002e7e8020a310c769</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoices" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">3b98e4e74f7463002e7e8020a310c7db</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-10-04 18:49:12</sys_updated_on>
+            <sys_updated_on>2018-10-10 14:28:01</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>mrr_total</element>
+            <element>.split</element>
             <position>4</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-10-04 18:49:12</sys_created_on>
-            <sys_id>f672a9c44fc123002e7e8020a310c7fe</sys_id>
+            <sys_created_on>2018-10-10 14:28:01</sys_created_on>
+            <sys_id>5330a73d4f0123002e7e8020a310c76a</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoices" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">3b98e4e74f7463002e7e8020a310c7db</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-10-04 18:49:12</sys_updated_on>
+            <sys_updated_on>2018-10-10 14:28:01</sys_updated_on>
             <sys_user/>
-            <type/>
+            <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>prorate_total</element>
+            <element>number</element>
             <position>5</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-10-04 18:49:12</sys_created_on>
-            <sys_id>7a72a9c44fc123002e7e8020a310c7fe</sys_id>
+            <sys_created_on>2018-10-10 14:28:01</sys_created_on>
+            <sys_id>d330a73d4f0123002e7e8020a310c76a</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoices" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">3b98e4e74f7463002e7e8020a310c7db</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-10-04 18:49:12</sys_updated_on>
+            <sys_updated_on>2018-10-10 14:28:01</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>adjustment_total</element>
+            <element>invoice_type</element>
             <position>6</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-10-04 18:49:12</sys_created_on>
-            <sys_id>fa72a9c44fc123002e7e8020a310c7fe</sys_id>
+            <sys_created_on>2018-10-10 14:28:01</sys_created_on>
+            <sys_id>5730a73d4f0123002e7e8020a310c76a</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoices" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">3b98e4e74f7463002e7e8020a310c7db</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-10-04 18:49:12</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>tm_total</element>
-            <position>7</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-10-04 18:49:12</sys_created_on>
-            <sys_id>7e72a9c44fc123002e7e8020a310c7fe</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoices" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">3b98e4e74f7463002e7e8020a310c7db</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-10-04 18:49:12</sys_updated_on>
+            <sys_updated_on>2018-10-10 14:28:01</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

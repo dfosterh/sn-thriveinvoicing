@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="core_company" label="Account" max_length="40" name="customer_account" text_index="true" type="collection">
+        <element label="Include Prorated Deprovisions" max_length="40" name="x_175353_thriveinv_include_prorated_deprovisions" type="boolean"/>
+        <element default="true" label="Include Prorated Provisions" max_length="40" name="x_175353_thriveinv_include_prorated_provisions" type="boolean"/>
+    </element>
+</database>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="774190f01f1310005a3637b8ec8b70ef" table="sys_ui_action">
     <sys_ui_action action="INSERT_OR_UPDATE">
-        <action_name>sysverb_generate_te_invoices</action_name>
+        <action_name>sysverb_generate_mrr_invoices</action_name>
         <active>true</active>
         <client>false</client>
         <client_script_v2/>
-        <comments>sysverb prefix on name allows this to work without selecting records. Weird.</comments>
+        <comments/>
         <condition/>
         <form_action>false</form_action>
         <form_button>false</form_button>
@@ -23,17 +23,18 @@
         <list_link>false</list_link>
         <list_save_with_form_button>false</list_save_with_form_button>
         <list_style/>
-        <name>Generate T&amp;M</name>
+        <name>Generate MRR</name>
         <onclick/>
-        <order>400</order>
+        <order>150</order>
         <script><![CDATA[var customers = new GlideRecord('customer_account');
 customers.addQuery('customer', true);
 customers.query();
+//and by all Service Locations in contracts
 
 var addCount = 0;
 while(customers.next()) {
 	var invoice = new GlideRecord('x_175353_thriveinv_invoices');
-	invoice.addQuery('invoice_type', 'TM');
+	invoice.addQuery('invoice_type', 'MRR');
 	invoice.addQuery('customer', customers.sys_id);
 	invoice.query();
 	
@@ -41,7 +42,7 @@ while(customers.next()) {
 		var newInvoice = new GlideRecord('x_175353_thriveinv_invoices');
 		newInvoice.initialize();
 		newInvoice.customer = customers.sys_id;
-		newInvoice.invoice_type = 'TM';
+		newInvoice.invoice_type = 'MRR';
 		newInvoice.invoice_date = new GlideDate();
 		newInvoice.insert();
 
@@ -56,19 +57,19 @@ gs.addInfoMessage(gs.getMessage('Created {0} new invoices', [addCount.toString()
         <show_update>true</show_update>
         <sys_class_name>sys_ui_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2018-09-24 19:42:57</sys_created_on>
+        <sys_created_on>2018-10-10 17:15:16</sys_created_on>
         <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
         <sys_domain_path>!!!/</sys_domain_path>
-        <sys_id>a4ee0ab04ff023002e7e8020a310c7bd</sys_id>
-        <sys_mod_count>17</sys_mod_count>
-        <sys_name>Generate T&amp;M</sys_name>
+        <sys_id>5ab5400a4f8123002e7e8020a310c738</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Generate MRR</sys_name>
         <sys_overrides/>
         <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
         <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
-        <sys_update_name>sys_ui_action_a4ee0ab04ff023002e7e8020a310c7bd</sys_update_name>
+        <sys_update_name>sys_ui_action_5ab5400a4f8123002e7e8020a310c738</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-10-10 17:27:42</sys_updated_on>
+        <sys_updated_on>2018-10-10 17:29:32</sys_updated_on>
         <table>x_175353_thriveinv_invoices</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>

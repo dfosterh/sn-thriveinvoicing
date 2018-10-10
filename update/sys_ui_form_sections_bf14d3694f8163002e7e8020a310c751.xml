@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="bf14d3694f8163002e7e8020a310c751" sys_domain="774190f01f1310005a3637b8ec8b70ef" table="customer_account" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-09 18:56:35</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>fb14d3694f8163002e7e8020a310c756</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="customer_account" name="customer_account" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="1bc213694f8163002e7e8020a310c7d7">bf14d3694f8163002e7e8020a310c751</sys_ui_form>
+            <sys_ui_section caption="NULL" display_value="" name="customer_account" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="474ba1b54f3113002e7e8020a310c70a">3314d3694f8163002e7e8020a310c754</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-09 18:56:35</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-09 18:56:35</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>b714d3694f8163002e7e8020a310c758</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="customer_account" name="customer_account" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="1bc213694f8163002e7e8020a310c7d7">bf14d3694f8163002e7e8020a310c751</sys_ui_form>
+            <sys_ui_section caption="Thrive Invoicing" display_value="Thrive Invoicing" name="customer_account" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="1bc213694f8163002e7e8020a310c7d7">bb14d3694f8163002e7e8020a310c757</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-09 18:56:35</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>customer_account</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-09 18:56:35</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>bf14d3694f8163002e7e8020a310c751</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>customer_account</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+            <sys_update_name>sys_ui_form_sections_bf14d3694f8163002e7e8020a310c751</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-09 18:56:35</sys_updated_on>
+            <sys_user/>
+            <view display_value="Rpt-tempcfb15762df222100a9e78b6c3df263a06816f79cc0a8016401c5a33be04be441" name="rpt-tempcfb15762df222100a9e78b6c3df263a06816f79cc0a8016401c5a33be04be441">1bc213694f8163002e7e8020a310c7d7</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

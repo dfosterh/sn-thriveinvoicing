@@ -4,13 +4,13 @@
             <element>number</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-09-24 17:41:14</sys_created_on>
-            <sys_id>a903b17c4f7023002e7e8020a310c76b</sys_id>
+            <sys_created_on>2018-10-05 14:32:10</sys_created_on>
+            <sys_id>d73179104f4123002e7e8020a310c784</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoice_details" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">a903b17c4f7023002e7e8020a310c769</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-24 17:41:14</sys_updated_on>
+            <sys_updated_on>2018-10-05 14:32:10</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -18,13 +18,13 @@
             <element>invoice</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-09-24 17:41:14</sys_created_on>
-            <sys_id>2903b17c4f7023002e7e8020a310c76c</sys_id>
+            <sys_created_on>2018-10-05 14:32:10</sys_created_on>
+            <sys_id>d33179104f4123002e7e8020a310c785</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoice_details" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">a903b17c4f7023002e7e8020a310c769</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-24 17:41:14</sys_updated_on>
+            <sys_updated_on>2018-10-05 14:32:10</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -32,13 +32,13 @@
             <element>.split</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-09-24 17:41:14</sys_created_on>
-            <sys_id>a903b17c4f7023002e7e8020a310c76c</sys_id>
+            <sys_created_on>2018-10-05 14:32:10</sys_created_on>
+            <sys_id>573179104f4123002e7e8020a310c785</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoice_details" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">a903b17c4f7023002e7e8020a310c769</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-24 17:41:14</sys_updated_on>
+            <sys_updated_on>2018-10-05 14:32:10</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
@@ -46,13 +46,13 @@
             <element>sourceidlink</element>
             <position>3</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-09-24 17:41:14</sys_created_on>
-            <sys_id>2d03b17c4f7023002e7e8020a310c76c</sys_id>
+            <sys_created_on>2018-10-05 14:32:10</sys_created_on>
+            <sys_id>d73179104f4123002e7e8020a310c785</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoice_details" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">a903b17c4f7023002e7e8020a310c769</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-24 17:41:14</sys_updated_on>
+            <sys_updated_on>2018-10-05 14:32:10</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -60,13 +60,13 @@
             <element>.end_split</element>
             <position>4</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-09-24 17:41:14</sys_created_on>
-            <sys_id>ad03b17c4f7023002e7e8020a310c76c</sys_id>
+            <sys_created_on>2018-10-05 14:32:10</sys_created_on>
+            <sys_id>5b3179104f4123002e7e8020a310c785</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoice_details" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">a903b17c4f7023002e7e8020a310c769</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-24 17:41:14</sys_updated_on>
+            <sys_updated_on>2018-10-05 14:32:10</sys_updated_on>
             <sys_user/>
             <type>.end_split</type>
         </sys_ui_element>
@@ -74,13 +74,13 @@
             <element>.begin_split</element>
             <position>5</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-09-24 17:41:14</sys_created_on>
-            <sys_id>2103b17c4f7023002e7e8020a310c76d</sys_id>
+            <sys_created_on>2018-10-05 14:32:10</sys_created_on>
+            <sys_id>db3179104f4123002e7e8020a310c785</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoice_details" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">a903b17c4f7023002e7e8020a310c769</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-24 17:41:14</sys_updated_on>
+            <sys_updated_on>2018-10-05 14:32:10</sys_updated_on>
             <sys_user/>
             <type>.begin_split</type>
         </sys_ui_element>
@@ -88,13 +88,13 @@
             <element>item</element>
             <position>6</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-09-24 17:41:14</sys_created_on>
-            <sys_id>a103b17c4f7023002e7e8020a310c76d</sys_id>
+            <sys_created_on>2018-10-05 14:32:10</sys_created_on>
+            <sys_id>5f3179104f4123002e7e8020a310c785</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoice_details" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">a903b17c4f7023002e7e8020a310c769</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-24 17:41:14</sys_updated_on>
+            <sys_updated_on>2018-10-05 14:32:10</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -102,13 +102,13 @@
             <element>detail</element>
             <position>7</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-09-24 17:41:14</sys_created_on>
-            <sys_id>2503b17c4f7023002e7e8020a310c76d</sys_id>
+            <sys_created_on>2018-10-05 14:32:10</sys_created_on>
+            <sys_id>df3179104f4123002e7e8020a310c785</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoice_details" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">a903b17c4f7023002e7e8020a310c769</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-24 17:41:14</sys_updated_on>
+            <sys_updated_on>2018-10-05 14:32:10</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -116,27 +116,27 @@
             <element>.split</element>
             <position>8</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-09-24 17:41:14</sys_created_on>
-            <sys_id>a503b17c4f7023002e7e8020a310c76d</sys_id>
+            <sys_created_on>2018-10-05 14:32:10</sys_created_on>
+            <sys_id>533179104f4123002e7e8020a310c786</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoice_details" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">a903b17c4f7023002e7e8020a310c769</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-24 17:41:14</sys_updated_on>
+            <sys_updated_on>2018-10-05 14:32:10</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>billed_hours</element>
+            <element>billed_quantity</element>
             <position>9</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-09-24 17:41:14</sys_created_on>
-            <sys_id>2903b17c4f7023002e7e8020a310c76d</sys_id>
+            <sys_created_on>2018-10-05 14:32:10</sys_created_on>
+            <sys_id>d33179104f4123002e7e8020a310c786</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoice_details" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">a903b17c4f7023002e7e8020a310c769</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-24 17:41:14</sys_updated_on>
+            <sys_updated_on>2018-10-05 14:32:10</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -144,13 +144,13 @@
             <element>billed_rate</element>
             <position>10</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-09-24 17:41:14</sys_created_on>
-            <sys_id>a903b17c4f7023002e7e8020a310c76d</sys_id>
+            <sys_created_on>2018-10-05 14:32:10</sys_created_on>
+            <sys_id>573179104f4123002e7e8020a310c786</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoice_details" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">a903b17c4f7023002e7e8020a310c769</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-24 17:41:14</sys_updated_on>
+            <sys_updated_on>2018-10-05 14:32:10</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -158,13 +158,13 @@
             <element>billed_amount</element>
             <position>11</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-09-24 17:41:14</sys_created_on>
-            <sys_id>2d03b17c4f7023002e7e8020a310c76d</sys_id>
+            <sys_created_on>2018-10-05 14:32:10</sys_created_on>
+            <sys_id>d73179104f4123002e7e8020a310c786</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_invoice_details" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">a903b17c4f7023002e7e8020a310c769</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-24 17:41:14</sys_updated_on>
+            <sys_updated_on>2018-10-05 14:32:10</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
