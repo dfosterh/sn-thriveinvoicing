@@ -4,22 +4,22 @@
         <license_condition/>
         <license_model>none</license_model>
         <license_roles/>
-        <name>x_175353_thriveinv_work_type_overrides</name>
+        <name>x_175353_thriveinv_work_types</name>
         <op_delete>true</op_delete>
         <op_insert>true</op_insert>
         <op_update>true</op_update>
         <owner_condition/>
         <sys_class_name>ua_table_licensing_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2018-08-14 19:18:50</sys_created_on>
-        <sys_id>9b20c3674f7353002e7e8020a310c74d</sys_id>
+        <sys_created_on>2018-08-14 18:39:43</sys_created_on>
+        <sys_id>64b760264f5563002e7e8020a310c7e9</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name>x_175353_thriveinv_work_type_overrides</sys_name>
+        <sys_name>x_175353_thriveinv_work_types</sys_name>
         <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
         <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
-        <sys_update_name>ua_table_licensing_config_9b20c3674f7353002e7e8020a310c74d</sys_update_name>
+        <sys_update_name>ua_table_licensing_config_64b760264f5563002e7e8020a310c7e9</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-14 19:18:50</sys_updated_on>
+        <sys_updated_on>2018-08-14 18:39:43</sys_updated_on>
     </ua_table_licensing_config>
 </record_update>

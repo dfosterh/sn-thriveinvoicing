@@ -53,15 +53,15 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-09-26 14:56:41</sys_created_on>
-        <sys_id>36402b194f3023002e7e8020a310c752</sys_id>
+        <sys_id>68b7a0264f5563002e7e8020a310c72a</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Manual Entry Total</sys_name>
         <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
         <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_dictionary_x_175353_thriveinv_invoices_adjustment_total</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-09-26 14:56:41</sys_updated_on>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2018-10-24 19:13:30</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

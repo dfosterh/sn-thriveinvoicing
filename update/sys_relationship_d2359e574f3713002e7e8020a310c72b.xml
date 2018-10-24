@@ -29,7 +29,7 @@
         <filter/>
         <list_id display_value="Incident - Default view" name="incident" related_list="NULL" sys_domain="global" view="Default view">8c98cb5b4f1423002e7e8020a310c7cb</list_id>
         <order_by/>
-        <position>7</position>
+        <position>9</position>
         <related_list>REL:d2359e574f3713002e7e8020a310c72b</related_list>
         <sys_class_name>sys_ui_related_list_relationship_entry</sys_class_name>
         <sys_created_by>admin</sys_created_by>

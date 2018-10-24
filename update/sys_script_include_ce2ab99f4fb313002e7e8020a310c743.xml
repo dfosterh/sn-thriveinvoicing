@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
     <sys_script_include action="INSERT_OR_UPDATE">
-        <access>package_private</access>
+        <access>public</access>
         <active>true</active>
         <api_name>x_175353_thriveinv.ThriveInvoiceUtil</api_name>
         <client_callable>false</client_callable>
@@ -127,53 +127,89 @@ ThriveInvoiceUtil.SetInvoiceDetailsMRR = function(invoiceID, companyID, invoiceD
 	try {
 		endPeriodDate = GetEOM(invoiceDate, -1);
 		gs.debug(gs.getMessage('Calculating RMM provisioned by {0}', [endPeriodDate]));
-
-		//OOB entitlement-contract relationship does not cascade delete. Need to make sure contract is still active
-		var mrr = new GlideAggregate('x_175353_contracts_m2m_configuratio_entitlements');
-		mrr.addQuery('entitlement.contract.account.sys_id', companyID);
-		mrr.addQuery('entitlement.contract.state', 'Active');
-		//Not using x_175353_contracts_provisioned_qty because current count is not the same as count prior to this month
-		mrr.addQuery('date_provisioned', '<=', endPeriodDate.getDate().getDisplayValue());
-		mrr.addAggregate('COUNT');
-		mrr.setGroup(true);
-		mrr.groupBy('entitlement');
+		
+		var mrr = new GlideRecord('service_entitlement');
+		mrr.addQuery('contract.account.sys_id', companyID);
+		mrr.addQuery('contract.state', 'Active');
+//mrr.addQuery('contract.x_175353_contracts_billing_starts', '<=', endPeriodDate.getDate().getDisplayValue());
+mrr.addQuery('start_date', '<=', endPeriodDate.getDate().getDisplayValue());
 		mrr.query();
 
 		var returnValue = 0;
-		var qty = 0;
-		
+
 		while (mrr.next()) {
-			if (mrr.entitlement.x_175353_contracts_bill_contracted_qty) {
-				qty = mrr.entitlement.x_175353_contracts_contract_quantity;
+			if (mrr.x_175353_contracts_bill_contracted_qty) {
+				returnValue += ThriveInvoiceUtil.SetInvoiceDetailsMRRContractQty(mrr, invoiceID);
 			}
 			else {
-				qty = mrr.getAggregate('COUNT');
+				returnValue += ThriveInvoiceUtil.SetInvoiceDetailsMRRProvisionedQty(mrr, invoiceID, endPeriodDate);
 			}
-			
-			var detail = new GlideRecord('x_175353_thriveinv_invoice_details');
-			detail.initialize();
-			
-			detail.is_manual_entry = false;
-			detail.invoice = invoiceID;
-			detail.sourceidlink = '/service_entitlement.do?sys_id=' + mrr.entitlement.sys_id;
-			var sku = mrr.entitlement.x_175353_contracts_business_service.name;
-			var desc = mrr.entitlement.x_175353_contracts_description;
-			detail.item =  sku + ': ' + desc;
-			detail.detail = 'Billed for next month';
-			detail.billed_quantity = qty;
-			detail.billed_rate = mrr.entitlement.x_175353_contracts_contracted_price;
-			detail.billed_amount = PerfectRound(qty * mrr.entitlement.x_175353_contracts_contracted_price, 2);
-			returnValue += PerfectRound(detail.billed_amount, 2);
-			
-			detail.insert();
 		}
-
 		gs.debug(gs.getMessage('MRR Invoice detail records generated for {0}.', [returnValue]));
 		
 		return returnValue;
 	}
 	catch(ex) {
-		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetails: ' + ex.message);
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetailsMRR: ' + ex.message);
+	}
+};
+
+ThriveInvoiceUtil.SetInvoiceDetailsMRRProvisionedQty = function(ent, invoiceID, endPeriodDate) {
+	try {
+		var mrr = new GlideAggregate('x_175353_contracts_m2m_configuratio_entitlements');
+
+		mrr.addQuery('entitlement', ent.sys_id);
+		//Not using x_175353_contracts_provisioned_qty because current count is not the same as count prior to this month
+		mrr.addQuery('date_provisioned', '<=', endPeriodDate.getDate().getDisplayValue());
+		mrr.addAggregate('SUM', 'provisioned_quantity');
+		mrr.setGroup(false);
+		mrr.query();
+
+		if (mrr.next()) {
+			var detail = new GlideRecord('x_175353_thriveinv_invoice_details');
+			detail.initialize();
+			
+			detail.is_manual_entry = false;
+			detail.invoice = invoiceID;
+			detail.sourceidlink = '/service_entitlement.do?sys_id=' + ent.sys_id;
+			var sku = ent.x_175353_contracts_business_service.name;
+			var desc = ent.x_175353_contracts_description;
+			detail.item =  sku + ': ' + desc;
+			detail.detail = 'Billed for next month';
+			detail.billed_quantity = mrr.getAggregate('SUM', 'provisioned_quantity');
+			detail.billed_rate = ent.x_175353_contracts_contracted_price;
+			detail.billed_amount = PerfectRound(mrr.getAggregate('SUM', 'provisioned_quantity') * ent.x_175353_contracts_contracted_price, 2);
+			detail.insert();
+
+			return PerfectRound(detail.billed_amount, 2);
+		}
+	}
+	catch(ex) {
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetailsMRRProvisionedQty: ' + ex.message);
+	}
+};
+
+ThriveInvoiceUtil.SetInvoiceDetailsMRRContractQty = function(mrr, invoiceID) {
+	try {
+		var detail = new GlideRecord('x_175353_thriveinv_invoice_details');
+		detail.initialize();
+
+		detail.is_manual_entry = false;
+		detail.invoice = invoiceID;
+		detail.sourceidlink = '/service_entitlement.do?sys_id=' + mrr.sys_id;
+		var sku = mrr.x_175353_contracts_business_service.name;
+		var desc = mrr.x_175353_contracts_description;
+		detail.item =  sku + ': ' + desc;
+		detail.detail = 'Billed for next month';
+		detail.billed_quantity = mrr.x_175353_contracts_contract_quantity;
+		detail.billed_rate = mrr.x_175353_contracts_contracted_price;
+		detail.billed_amount = PerfectRound(mrr.x_175353_contracts_contract_quantity * mrr.x_175353_contracts_contracted_price, 2);
+		detail.insert();
+		
+		return PerfectRound(detail.billed_amount, 2);
+	}
+	catch(ex) {
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetailsMRRContractQty: ' + ex.message);
 	}
 };
 
@@ -205,9 +241,9 @@ ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds = function(invoiceID, company
 		
 		var returnValue = 0;
 		while (mrra.next()) {
-			if(mrra.entitlement.x_175353_contracts_bill_contracted_qty) {
-				continue;
-			}
+//			if(mrra.entitlement.x_175353_contracts_bill_contracted_qty) {
+//				continue;
+//			}
 
 			var mrrp = new GlideRecord('x_175353_contracts_entitlement_history');
 			mrrp.addQuery('event', '!=', 'delete');
@@ -232,10 +268,15 @@ ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds = function(invoiceID, company
 				var sku = mrrp.business_service_name;
 				var desc = mrrp.entitlement_description;
 				detail.item = sku + ': ' + desc;
-				detail.detail = 'Provisioned to ' + mrrp.granted_to_name + ' on ' + mrrp.date_provisioned.toString();
-				detail.billed_quantity = rate;
+				detail.detail = gs.getMessage('Provisioned {0} to {1} on {2}', [mrrp.provisioned_quantity, mrrp.granted_to_name, mrrp.date_provisioned.toString()]);
+//if(mrrp.ci_entitlement.provisioned_quantity > 0) {
+				detail.billed_quantity = rate * mrrp.provisioned_quantity;
+//}
+//else {
+//				detail.billed_quantity = rate;
+//}
 				detail.billed_rate = mrrp.contracted_price;
-				detail.billed_amount = PerfectRound(rate * mrrp.contracted_price, 2);
+				detail.billed_amount = PerfectRound(detail.billed_quantity * mrrp.contracted_price, 2);
 				returnValue += PerfectRound(detail.billed_amount, 2);
 
 				detail.insert();
@@ -517,13 +558,13 @@ function GetBOM(date, offset) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-13 19:35:01</sys_created_on>
         <sys_id>ce2ab99f4fb313002e7e8020a310c743</sys_id>
-        <sys_mod_count>348</sys_mod_count>
+        <sys_mod_count>371</sys_mod_count>
         <sys_name>ThriveInvoiceUtil</sys_name>
         <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_script_include_ce2ab99f4fb313002e7e8020a310c743</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-10-10 14:34:20</sys_updated_on>
+        <sys_updated_on>2018-10-17 14:52:32</sys_updated_on>
     </sys_script_include>
 </record_update>

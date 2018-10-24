@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[var origInvoiceDate;
+
+function invoice_bulk_dialog_cancelDialog() {
+//	var c = gel('cancelled');
+//	c.value = "true";
+	GlideDialogWindow.get().destroy();
+	return false;
+}
+
+function bomClicked(stateVal) {
+	var dtEl = document.querySelector("#invoice_date");
+
+	if(stateVal) {
+		var dt = new Date(dtEl.value);
+		origInvoiceDate = dt.toISOString().split("T")[0];
+
+        var m = dt.getMonth(),
+            y = dt.getFullYear();
+
+        dtEl.value = new Date(y, m, 1).toISOString().split("T")[0];
+	}
+	else {
+		dtEl.value = origInvoiceDate;
+	}
+}]]></client_script>
+        <description>modelled after update_resource_aggregates</description>
+        <direct>false</direct>
+        <endpoint>x_175353_thriveinv_invoice_bulk_dialog.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<g:ui_form>
+		<div class="form-horizontal">
+			<p class="help-block" id="description">${sysparm_description}</p>
+			<p class="help-block" role="alert" id="rangeError"></p>
+			<div class="form-group is-required" id="invoiceTypeSelector">
+				<div class="row">
+					<label class="col-sm-12 col-md-4 control-label" for="invoice_type">
+						<span class="required-marker label_description"></span>
+						<span class="label-text">${gs.getMessage('Invoice Type')}</span>
+					</label>
+					<div class="form-field col-sm-12 col-md-6 input_controls">
+						<select name="invoice_type">
+							<option value=""></option>
+							<option value="MRR">MRR</option>
+							<option value="MRRP">MRR Prorates</option>
+							<option value="Project">Project</option>
+							<option value="TM">Time &amp; Materials</option>
+						</select>
+						<p class="help-block" role="alert" id="invoiceTypeError"></p>
+					</div>
+				</div>
+				<div class="row">
+					<label class="col-sm-12 col-md-4 control-label" for="invoice_date">
+						<span class="required-marker label_description"></span>
+						<span class="label-text">${gs.getMessage('Invoice Date')}</span>
+					</label>
+					<div class="form-field col-sm-12 col-md-4 input_controls">
+						<g:ui_date name="invoice_date" id="invoice_date" />
+						<p class="help-block" role="alert" id="invoiceDateError"></p>
+					</div>
+					<div class="col-sm-12 col-md-4 input_controls">
+						BOM: &#160; <input type="checkbox" onClick="bomClicked(this.checked);" />
+						<p class="help-block" role="alert" id="invoiceDateError"></p>
+					</div>
+				</div>
+				<div class="row">
+					<label class="col-sm-12 col-md-4 control-label" for="recalc_all">
+						<span class="label_description"></span>
+						<span class="label-text">${gs.getMessage('Recalculate')}</span>
+					</label>
+					<div class="form-field col-sm-12 col-md-6 input_controls">
+						<input type="checkbox" name="recalc_all" />
+						<p class="help-block" role="alert" id="recalculateError"></p>
+					</div>
+				</div>
+			</div>
+			<div class="pull-right form-group" id="dialog-btns">
+				<g:dialog_buttons_ok_cancel ok="document.getElementById('ok_button').style.cursor = 'wait'; return true"/>
+			</div>
+		</div>
+	</g:ui_form>
+</j:jelly>]]></html>
+        <name>invoice_bulk_dialog</name>
+        <processing_script><![CDATA[try {
+	var recalcVal = false;
+	try {
+		recalcVal = recalc_all;
+	}
+	catch(ex){}
+
+	genInvoices(invoice_type, invoice_date, recalcVal);
+
+	var session = gs.getSession();
+	var urlOnStack = session.getUrlOnStack();
+	response.sendRedirect(urlOnStack);
+}
+catch(ex) {
+	gs.addErrorMessage(gs.getMessage('Error in invoice_bulk_dialog script: {0}', [ex]));
+}
+
+function genInvoices(invoiceType, invoiceDate, recalcAll) {
+	try {
+		if (invoiceType.length > 0) {
+			var customers = new GlideRecord('customer_account');
+			customers.addQuery('customer', true);
+			customers.query();
+			//and by all Service Locations in contracts (implies that non-covered T&M will be against a contract)
+
+			var addCount = 0;
+			var updCount = 0;
+			while(customers.next()) {
+				var invoice = new GlideRecord('x_175353_thriveinv_invoices');
+				invoice.addQuery('invoice_type', invoiceType);
+				invoice.addQuery('customer', customers.sys_id);
+				invoice.addQuery('invoice_date', invoiceDate);
+				invoice.query();
+
+				if(!invoice.next()) {
+					var newInvoice = new GlideRecord('x_175353_thriveinv_invoices');
+					newInvoice.initialize();
+					newInvoice.customer = customers.sys_id;
+					newInvoice.invoice_type = invoiceType;
+					newInvoice.invoice_date = invoiceDate;
+					newInvoice.insert();
+
+					addCount += 1;
+				}
+				else if(recalcAll) {
+					x_175353_thriveinv.ThriveInvoiceUtil.CalculateInvoice(invoice);
+					
+					updCount += 1;
+				}
+			}
+			gs.addInfoMessage(gs.getMessage('Created {0} new, and recalculated {1} {2} invoices', [addCount.toString(), updCount.toString(), invoiceType]));
+		}
+	}
+	catch(ex) {
+		gs.addErrorMessage(gs.getMessage('Error in invoice_bulk_dialog.genInvoices: {0}', [ex]));
+	}
+}
+]]></processing_script>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-10-22 16:27:59</sys_created_on>
+        <sys_id>3f8aedf14f9123002e7e8020a310c70d</sys_id>
+        <sys_mod_count>76</sys_mod_count>
+        <sys_name>invoice_bulk_dialog</sys_name>
+        <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+        <sys_update_name>sys_ui_page_3f8aedf14f9123002e7e8020a310c70d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-10-24 15:31:19</sys_updated_on>
+    </sys_ui_page>
+</record_update>

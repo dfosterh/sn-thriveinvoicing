@@ -48,7 +48,7 @@
         <sys_id>183091b04f3023002e7e8020a310c7cf</sys_id>
         <sys_mod_count>2</sys_mod_count>
         <sys_name>Business Application Certification Quarterly</sys_name>
-        <sys_package display_value="Application Portfolio Management" source="sn_apm">65c1ca2cdbb2120091285411cf961963</sys_package>
+        <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
         <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>cert_instance_183091b04f3023002e7e8020a310c7cf</sys_update_name>

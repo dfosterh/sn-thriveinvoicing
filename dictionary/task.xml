@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element attributes="reference_index_include=active,all_tables.live_feed=true,all_tables.text_index_translations=true,all_tables.detail_row=short_description,all_tables.display_color=priority,extension_model=hierarchy,hasListeners=true,largeTable=true" label="Task" max_length="40" name="task" sizeclass="5690" text_index="true" type="collection">
+    <element attributes="reference_index_include=active,all_tables.live_feed=true,all_tables.text_index_translations=true,all_tables.detail_row=short_description,all_tables.display_color=priority,extension_model=hierarchy,hasListeners=true,largeTable=true" label="Task" max_length="40" name="task" sizeclass="6193" text_index="true" type="collection">
         <element choice="1" label="Work Role" max_length="32" name="x_175353_thriveinv_work_role" reference="fm_labor_rate_card" type="reference">
             <choice/>
         </element>
@@ -7,11 +7,11 @@
             <choice/>
         </element>
         <index name="index">
-            <element name="x_175353_thriveinv_work_type"/>
+            <element name="x_175353_thriveinv_work_role"/>
             <element name="active"/>
         </index>
         <index name="index2">
-            <element name="x_175353_thriveinv_work_role"/>
+            <element name="x_175353_thriveinv_work_type"/>
             <element name="active"/>
         </index>
     </element>
