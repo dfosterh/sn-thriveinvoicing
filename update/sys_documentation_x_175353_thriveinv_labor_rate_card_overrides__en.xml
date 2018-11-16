@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="" label="Labor Rate Card Overrides" language="en" table="x_175353_thriveinv_labor_rate_card_overrides">
+    <sys_documentation element="" label="_REPLACEDLabor Rate Card Overrides" language="en" table="x_175353_thriveinv_labor_rate_card_overrides">
         <sys_documentation action="INSERT_OR_UPDATE">
             <element/>
             <help/>
             <hint/>
-            <label>Labor Rate Card Overrides</label>
+            <label>_REPLACEDLabor Rate Card Overrides</label>
             <language>en</language>
             <name>x_175353_thriveinv_labor_rate_card_overrides</name>
-            <plural>Labor Rate Card Overrides</plural>
+            <plural>_REPLACEDLabor Rate Card Overrides</plural>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2018-08-14 20:41:46</sys_created_on>
             <sys_id>1a23d3e34fb353002e7e8020a310c73f</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_name>Labor Rate Card Overrides</sys_name>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_name>_REPLACEDLabor Rate Card Overrides</sys_name>
             <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
             <sys_policy/>
             <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
             <sys_update_name>sys_documentation_x_175353_thriveinv_labor_rate_card_overrides__en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-14 20:41:46</sys_updated_on>
+            <sys_updated_on>2018-10-26 17:35:27</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

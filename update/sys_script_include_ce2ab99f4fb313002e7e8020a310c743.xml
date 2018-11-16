@@ -17,8 +17,11 @@ ThriveInvoiceUtil.CalculateInvoice = function(invoice) {
 		priorDetail.deleteMultiple();
 
 		var teTotal = 0;
-		var mrrTotal = 0;
+		var mrrTotals = {};
 		var mrrTotalProrates = 0;
+		var feesTotal = 0;
+
+		ThriveInvoiceUtil.ReleaseTimeEntries(invoice.sys_id);
 
 		switch (invoice.invoice_type.toString()) {
 			case 'TM':
@@ -26,15 +29,16 @@ ThriveInvoiceUtil.CalculateInvoice = function(invoice) {
 				teTotal = ThriveInvoiceUtil.SetInvoiceDetailsTE(invoice.sys_id);
 				break;
 			case 'MRR':
-				ThriveInvoiceUtil.ReleaseTimeEntries(invoice.sys_id);
-				mrrTotal = ThriveInvoiceUtil.SetInvoiceDetailsMRR(invoice.sys_id, invoice.customer.sys_id, invoice.invoice_date);
+				mrrTotals = ThriveInvoiceUtil.SetInvoiceDetailsMRR(invoice);
 				if(invoice.include_prorated_provisions) {
-					mrrTotalProrates = ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds(invoice.sys_id, invoice.customer.sys_id, invoice.invoice_date);
+					mrrTotalProrates = ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds(invoice);
+				}
+				if(invoice.include_prorated_deprovisions) {
+					gs.addInfoMessage('Include Prorated Deprovisions not yet implemented');
 				}
 				break;
 			case 'MRRP':
-				ThriveInvoiceUtil.ReleaseTimeEntries(invoice.sys_id);
-				mrrTotalProrates = ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds(invoice.sys_id, invoice.customer.sys_id, invoice.invoice_date);
+				mrrTotalProrates = ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds(invoice);
 				break;
 			case 'project':
 				gs.addErrorMessage('I don\'t know how to calculate projects yet.');
@@ -43,17 +47,45 @@ ThriveInvoiceUtil.CalculateInvoice = function(invoice) {
 		
 		gs.debug(gs.getMessage('Invoice detail records generated for type {0}.', [invoice.invoice_type]));
 		
+		feesTotal = ThriveInvoiceUtil.AddTaxFee(invoice);
+		
 		var inv = new GlideRecord('x_175353_thriveinv_invoices');
 		inv.get(invoice.sys_id);
 		inv.tm_total = teTotal;
-		inv.mrr_total = mrrTotal;
+		inv.mrr_total = mrrTotals.mrrTotal;
 		inv.prorate_total = mrrTotalProrates;
+		inv.fees_total = feesTotal;
+		inv.discounts_total = mrrTotals.mrrDiscount;
 		inv.adjustment_total = ThriveInvoiceUtil.GetManualAdjustmentTotal(invoice.sys_id);
 
 		inv.update();
 	}
 	catch(ex) {
 		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetails: ' + ex.message);
+	}
+};
+
+ThriveInvoiceUtil.AddTaxFee = function(invoice) {
+	try {
+		if (invoice.include_tax_fee) {
+			var detail = new GlideRecord('x_175353_thriveinv_invoice_details');
+			detail.initialize();
+			
+			detail.is_manual_entry = false;
+			detail.invoice = invoice.sys_id;
+			detail.sourceidlink = '/x_175353_thriveinv_invoices.do?sys_id=' + invoice.sys_id;
+			detail.item = 'Tax Service Fee';
+			detail.detail = 'For calculating your local sales tax. Please contact us if you prefer to calculate sales tax for yourself.';
+			detail.billed_quantity = 1;
+			detail.billed_rate = 15;
+			detail.billed_amount = 15;
+			detail.insert();
+
+			return 15;
+		}
+	}
+	catch(ex) {
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.AddTaxFee: ' + ex.message);
 	}
 };
 
@@ -66,7 +98,8 @@ ThriveInvoiceUtil.ReleaseTimeEntries = function(invoiceID) {
 	}
 	catch(ex) {
 		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetails: ' + ex.message);
-	}};
+	}
+};
 
 ThriveInvoiceUtil.GetManualAdjustmentTotal = function(invoiceID) {
 	try {
@@ -123,20 +156,48 @@ ThriveInvoiceUtil.SetInvoiceDetailsTE = function(invoiceID) {
 	}
 };
 
-ThriveInvoiceUtil.SetInvoiceDetailsMRR = function(invoiceID, companyID, invoiceDate) {
+ThriveInvoiceUtil.SetInvoiceDetailsMRR = function(invoice) {
 	try {
-		endPeriodDate = GetEOM(invoiceDate, -1);
+		endPeriodDate = GetEOM(invoice.invoice_date, -1);
 		gs.debug(gs.getMessage('Calculating RMM provisioned by {0}', [endPeriodDate]));
 		
+		var cnt = new GlideRecord('ast_service');
+		cnt.addQuery('location', invoice.billing_location);
+		cnt.addQuery('x_175353_contracts_service_location', invoice.service_location);
+		cnt.addQuery('x_175353_contracts_is_master', false);
+		cnt.addQuery('state', 'Active');
+//billing starts date?
+		cnt.query();
+		
+		var returnValue = {
+			mrrTotal: 0,
+			mrrDiscount: 0
+		};
+
+		while (cnt.next()) {
+			returnValue.mrrTotal = ThriveInvoiceUtil.SetInvoiceDetailsMRRByProduct(invoice.sys_id, cnt.sys_id, endPeriodDate.getDate().getDisplayValue());
+
+			returnValue.mrrDiscount = ThriveInvoiceUtil.SetInvoiceDetailsMRRContractedDiscount(returnValue.mrrTotal, cnt, invoice.sys_id);
+		}
+			
+		return returnValue;
+	}
+	catch(ex) {
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetailsMRR: ' + ex.message);
+	}
+};
+
+ThriveInvoiceUtil.SetInvoiceDetailsMRRByProduct = function(invoiceID, contractID, invoicePeriodEndDate) {
+	try {
 		var mrr = new GlideRecord('service_entitlement');
-		mrr.addQuery('contract.account.sys_id', companyID);
-		mrr.addQuery('contract.state', 'Active');
+		mrr.addQuery('contract', contractID);
 //mrr.addQuery('contract.x_175353_contracts_billing_starts', '<=', endPeriodDate.getDate().getDisplayValue());
-mrr.addQuery('start_date', '<=', endPeriodDate.getDate().getDisplayValue());
+		mrr.addQuery('start_date', '<=', invoicePeriodEndDate);
+		mrr.orderBy('x_175353_contracts_service_offering.name');
 		mrr.query();
 
 		var returnValue = 0;
-
+		
 		while (mrr.next()) {
 			if (mrr.x_175353_contracts_bill_contracted_qty) {
 				returnValue += ThriveInvoiceUtil.SetInvoiceDetailsMRRContractQty(mrr, invoiceID);
@@ -146,11 +207,47 @@ mrr.addQuery('start_date', '<=', endPeriodDate.getDate().getDisplayValue());
 			}
 		}
 		gs.debug(gs.getMessage('MRR Invoice detail records generated for {0}.', [returnValue]));
+			
+		return returnValue;
+	}
+	catch(ex) {
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetailsMRRByProduct: ' + ex.message);
+	}
+};
+
+ThriveInvoiceUtil.SetInvoiceDetailsMRRContractedDiscount = function(contractInvoicedTotal, contract, invoiceID) {
+	try {
+		var returnValue = 0;
+		
+		if(contract.x_175353_contracts_mrr_discount > 0) {
+			var detail = new GlideRecord('x_175353_thriveinv_invoice_details');
+			detail.initialize();
+
+			detail.is_manual_entry = false;
+			detail.invoice = invoiceID;
+			detail.sourceidlink = '/ast_contract.do?sys_id=' + contract.sys_id;
+			detail.item = 'Discount from contract ' + contract.short_description;
+			detail.detail = gs.getMessage('Discount {0} of {1} applied to all MRR services from the contract dated {2}', [contract.x_175353_contracts_mrr_discount_type, contract.x_175353_contracts_mrr_discount, contract.starts.getDisplayValue()]);
+			detail.billed_quantity = 1;
+			switch(contract.x_175353_contracts_mrr_discount_type.toString()) {
+				case 'multiplier':
+					returnValue = -PerfectRound(contractInvoicedTotal * contract.x_175353_contracts_mrr_discount, 2);
+					detail.billed_rate = returnValue;
+					detail.billed_amount = returnValue;
+					break;
+				case 'adjustment':
+					returnValue = -PerfectRound(contractInvoicedTotal + contract.x_175353_contracts_mrr_discount, 2);
+					detail.billed_rate = returnValue;
+					detail.billed_amount = returnValue;
+					break;
+			}
+			detail.insert();
+		}
 		
 		return returnValue;
 	}
 	catch(ex) {
-		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetailsMRR: ' + ex.message);
+		gs.addErrorMessage('Error in ThriveInvoiceUtil.SetInvoiceDetailsMRRContractedDiscount: ' + ex.message);
 	}
 };
 
@@ -172,7 +269,7 @@ ThriveInvoiceUtil.SetInvoiceDetailsMRRProvisionedQty = function(ent, invoiceID, 
 			detail.is_manual_entry = false;
 			detail.invoice = invoiceID;
 			detail.sourceidlink = '/service_entitlement.do?sys_id=' + ent.sys_id;
-			var sku = ent.x_175353_contracts_business_service.name;
+			var sku = ent.x_175353_contracts_service_offering.name;
 			var desc = ent.x_175353_contracts_description;
 			detail.item =  sku + ': ' + desc;
 			detail.detail = 'Billed for next month';
@@ -197,7 +294,7 @@ ThriveInvoiceUtil.SetInvoiceDetailsMRRContractQty = function(mrr, invoiceID) {
 		detail.is_manual_entry = false;
 		detail.invoice = invoiceID;
 		detail.sourceidlink = '/service_entitlement.do?sys_id=' + mrr.sys_id;
-		var sku = mrr.x_175353_contracts_business_service.name;
+		var sku = mrr.x_175353_contracts_service_offering.name;
 		var desc = mrr.x_175353_contracts_description;
 		detail.item =  sku + ': ' + desc;
 		detail.detail = 'Billed for next month';
@@ -213,18 +310,22 @@ ThriveInvoiceUtil.SetInvoiceDetailsMRRContractQty = function(mrr, invoiceID) {
 	}
 };
 
-ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds = function(invoiceID, companyID, invoiceDate) {
+ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds = function(invoice) {
 	try {
 		/*
 		TODO: What if SKU/Device pair on prior period invoice, which means this month is already paid for?
 			This will happen, but could be an acceptible initial bug. Need test data spanning multiple months
+			
+		TODO: discount from contract applied to prorated?
 		*/
-		var startPeriodDate = GetBOM(invoiceDate, -1);
-		var endPeriodDate = GetEOM(invoiceDate, -1);
+		var startPeriodDate = GetBOM(invoice.invoice_date, -1);
+		var endPeriodDate = GetEOM(invoice.invoice_date, -1);
 		gs.debug(gs.getMessage('Calculating prorated provisionings for {0} - {1}', [startPeriodDate, endPeriodDate]));
 
 		var mrra = new GlideAggregate('x_175353_contracts_entitlement_history');
-		mrra.addQuery('company.sys_id', companyID);
+//redundant?		mrra.addQuery('company.sys_id', invoice.customer.sys_id);
+		mrra.addQuery('entitlement.contract.location.sys_id', invoice.billing_location.sys_id);
+		mrra.addQuery('entitlement.contract.x_175353_contracts_service_location.sys_id', invoice.service_location.sys_id);
 		mrra.addQuery('entitlement.contract.state', 'Active');
 		mrra.addQuery('event', '!=', 'delete');
 		mrra.addQuery('date_provisioned', '>=', startPeriodDate.getDate().getDisplayValue());
@@ -263,7 +364,7 @@ ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds = function(invoiceID, company
 				detail.initialize();
 
 				detail.is_manual_entry = false;
-				detail.invoice = invoiceID;
+				detail.invoice = invoice.sys_id;
 				detail.sourceidlink = '/service_entitlement.do?sys_id=' + mrrp.entitlement.sys_id;
 				var sku = mrrp.business_service_name;
 				var desc = mrrp.entitlement_description;
@@ -295,19 +396,22 @@ ThriveInvoiceUtil.SetInvoiceDetailsMRRProratedAdds = function(invoiceID, company
 ThriveInvoiceUtil.SetTimeInvoiced = function(invoice) {
 	try {
 		var te = new GlideRecord('task_time_worked');
-//add Service Location filter
-		var qry = gs.getMessage('task.sys_domain={0}^x_175353_thriveinv_invoiceISEMPTY^ORx_175353_thriveinv_invoice={1}', [invoice.sys_domain, invoice.sys_id]);
-		te.addQuery(qry);
+//		var qry = gs.getMessage('task.sys_domain={0}^x_175353_thriveinv_invoiceISEMPTY^ORx_175353_thriveinv_invoice={1}', [invoice.sys_domain, invoice.sys_id]);
+		te.addQuery('task.company', invoice.customer);
+		te.addQuery('task.x_175353_contracts_entitlement.contract.location', invoice.billing_location);
+		te.addQuery('task.x_175353_contracts_entitlement.contract.x_175353_contracts_service_location', invoice.service_location);
+		var qry = gs.getMessage('x_175353_thriveinv_invoiceISEMPTY^ORx_175353_thriveinv_invoice={0}', [invoice.sys_id]);
+		te.addEncodedQuery(qry);
 		te.query();
 
 		while (te.next()) {
-			var wrRate = ThriveInvoiceUtil.GetWorkRoleRate(1, te.x_175353_thriveinv_work_role, te.task.company, null, te.task.parent);
+			var wrRate = ThriveInvoiceUtil.GetWorkRoleRate(1, te.x_175353_thriveinv_work_role, te.task.company, te.task.x_175353_contracts_entitlement.contract, te.task.parent);
 			if(!wrRate) {
 				te.x_175353_thriveinv_has_billing_issue = true;
 				te.x_175353_thriveinv_adjustment_reason = 'Failed to get Work Role rate';
 			}
 			
-			var workType = ThriveInvoiceUtil.GetWorkType(2, te.x_175353_thriveinv_work_type, te.task.company, null, te.task.parent);
+			var workType = ThriveInvoiceUtil.GetWorkType(2, te.x_175353_thriveinv_work_type, te.task.company, te.task.x_175353_contracts_entitlement.contract, te.task.parent);
 			if(!workType) {
 				te.x_175353_thriveinv_has_billing_issue = true;
 				te.x_175353_thriveinv_adjustment_reason = 'Failed to get Work Type';
@@ -329,8 +433,6 @@ ThriveInvoiceUtil.SetTimeInvoiced = function(invoice) {
 				te.x_175353_thriveinv_has_billing_issue = false;
 			}
 
-			
-			
 			te.update();
 		}
 
@@ -391,50 +493,62 @@ ThriveInvoiceUtil.GetBilledHours = function(messageOrder, teSeconds, workType) {
 	return teMinutes / 60;
 };
 
-ThriveInvoiceUtil.GetWorkRoleRate = function(messageOrder, workRoleId, companyId, contractId, projectId) {
-	if(!workRoleId) {
+ThriveInvoiceUtil.GetWorkRoleRate = function(messageOrder, rateTypeId, companyId, contractId, projectId) {
+	if(!rateTypeId) {
 		gs.addErrorMessage('There is a Time Entry with no Work Role selected.');
 		return null;
 	}
 	
-	var wrRate;
+	var returnValue;
 	
 //RISK: projectId is parent. Need to check class or other attribute to make sure this is pointing to a project. What about nested tasks? Also need to make sure Company does not get picked up off of project/contract overrides.
 	if (projectId) {
-		 wrRate = ThriveInvoiceUtil.GetWorkRoleRateForProject(workRoleId, projectId);
+		 returnValue = ThriveInvoiceUtil.GetWorkRoleRateForProject(rateTypeId, projectId);
 	}
 	
-	if (wrRate) {
+	if (returnValue) {
 		ThriveInvoiceUtil.AdjustmentReason.push({
 			order: messageOrder,
-			value: gs.getMessage('Work Role rate ${0} from Project Override', [wrRate])
+			value: gs.getMessage('Work Role rate ${0} from Project Override', [returnValue])
 		});
 	}
 	else {
-		if (companyId) {
-			wrRate = ThriveInvoiceUtil.GetWorkRoleRateForCompany(workRoleId, companyId);
+		if (contractId) {
+			returnValue = ThriveInvoiceUtil.GetWorkRoleRateForContract(rateTypeId, contractId);
 		}
 	
-		if (wrRate) {
+		if (returnValue) {
 			ThriveInvoiceUtil.AdjustmentReason.push({
 				order: messageOrder,
-				value: gs.getMessage('Work Role rate ${0} from Company Override', [wrRate])
+				value: gs.getMessage('Work Role rate ${0} from Contract Override', [returnValue])
 			});
 		}
 		else {
-			wrRate = ThriveInvoiceUtil.GetWorkRoleRateDefault(workRoleId);
-			ThriveInvoiceUtil.AdjustmentReason.push({
-				order: messageOrder,
-				value: gs.getMessage('Default Work Role rate ${0}', [wrRate])
-			});
+			if (companyId) {
+				returnValue = ThriveInvoiceUtil.GetWorkRoleRateForCompany(rateTypeId, companyId);
+			}
+
+			if (returnValue) {
+				ThriveInvoiceUtil.AdjustmentReason.push({
+					order: messageOrder,
+					value: gs.getMessage('Work Role rate ${0} from Company Override', [returnValue])
+				});
+			}
+			else {
+				returnValue = ThriveInvoiceUtil.GetWorkRoleRateDefault(rateTypeId);
+				ThriveInvoiceUtil.AdjustmentReason.push({
+					order: messageOrder,
+					value: gs.getMessage('Default Work Role rate ${0}', [returnValue])
+				});
+			}
 		}
 	}
 	
-	return wrRate;
+	return returnValue;
 };
 
-ThriveInvoiceUtil.GetWorkType = function(messageOrder, workTypeId, companyId, contractId, projectId) {
-	if(!workTypeId) {
+ThriveInvoiceUtil.GetWorkType = function(messageOrder, rateAdjTypeId, companyId, contractId, projectId) {
+	if(!rateAdjTypeId) {
 		gs.addErrorMessage('There is a Time Entry with no Work Type selected.');
 		return null;
 	}
@@ -442,7 +556,7 @@ ThriveInvoiceUtil.GetWorkType = function(messageOrder, workTypeId, companyId, co
 	var returnValue;
 	
 	if (projectId) {
-		 returnValue = ThriveInvoiceUtil.GetWorkTypeForProject(workTypeId, projectId);
+		 returnValue = ThriveInvoiceUtil.GetWorkTypeForProject(rateAdjTypeId, projectId);
 	}
 	
 	if (returnValue) {
@@ -452,32 +566,45 @@ ThriveInvoiceUtil.GetWorkType = function(messageOrder, workTypeId, companyId, co
 		});
 	}
 	else {
-		if(companyId) {
-			returnValue = ThriveInvoiceUtil.GetWorkTypeForCompany(workTypeId, companyId);
+		if(contractId) {
+			returnValue = ThriveInvoiceUtil.GetWorkTypeForContract(rateAdjTypeId, contractId);
 		}
 		
 		if (returnValue) {
 			ThriveInvoiceUtil.AdjustmentReason.push({
 				order: messageOrder,
-				value: gs.getMessage('Work Type from Company Override')
+				value: gs.getMessage('Work Type from Contract Override')
 			});
 		}
 		else {
-			returnValue = ThriveInvoiceUtil.GetWorkTypeDefault(workTypeId);
-			ThriveInvoiceUtil.AdjustmentReason.push({
-				order: messageOrder,
-				value: gs.getMessage('Work Type from Default')
-			});
+			if(companyId) {
+				returnValue = ThriveInvoiceUtil.GetWorkTypeForCompany(rateAdjTypeId, companyId);
+			}
+
+			if (returnValue) {
+				ThriveInvoiceUtil.AdjustmentReason.push({
+					order: messageOrder,
+					value: gs.getMessage('Work Type from Company Override')
+				});
+			}
+			else {
+				returnValue = ThriveInvoiceUtil.GetWorkTypeDefault(rateAdjTypeId);
+				ThriveInvoiceUtil.AdjustmentReason.push({
+					order: messageOrder,
+					value: gs.getMessage('Work Type from Default')
+				});
+			}
 		}
 	}
 
 	return returnValue;
 };
 
-ThriveInvoiceUtil.GetWorkRoleRateForProject = function(workRoleId, projectId) {
-	var wr = new GlideRecord('x_175353_thriveinv_labor_rate_card_overrides');
-	wr.addQuery('overridden_work_role', workRoleId);
-	wr.addQuery('project', projectId);
+ThriveInvoiceUtil.GetWorkRoleRateForProject = function(rateTypeId, projectId) {
+	var wr = new GlideRecord('fm_labor_rate_card');
+	wr.addQuery('rate_type', rateTypeId);
+	wr.addQuery('active', true);
+	wr.addQuery('x_175353_thriveinv_project', projectId);
 	wr.query();
 
 	if(wr.next()) {
@@ -485,10 +612,23 @@ ThriveInvoiceUtil.GetWorkRoleRateForProject = function(workRoleId, projectId) {
 	}
 };
 
-ThriveInvoiceUtil.GetWorkRoleRateForCompany = function(workRoleId, companyId) {
-	var wr = new GlideRecord('x_175353_thriveinv_labor_rate_card_overrides');
-	wr.addQuery('overridden_work_role', workRoleId);
-	wr.addQuery('company', companyId);
+ThriveInvoiceUtil.GetWorkRoleRateForContract = function(rateTypeId, contractId) {
+	var wr = new GlideRecord('fm_labor_rate_card');
+	wr.addQuery('rate_type', rateTypeId);
+	wr.addQuery('active', true);
+	wr.addQuery('x_175353_thriveinv_contract', contractId);
+	wr.query();
+
+	if(wr.next()) {
+		return wr.hourly_rate;
+	}
+};
+
+ThriveInvoiceUtil.GetWorkRoleRateForCompany = function(rateTypeId, companyId) {
+	var wr = new GlideRecord('fm_labor_rate_card');
+	wr.addQuery('rate_type', rateTypeId);
+	wr.addQuery('active', true);
+	wr.addQuery('x_175353_thriveinv_account', companyId);
 	wr.addQuery('contract', null);
 	wr.addQuery('project', null);
 	wr.query();
@@ -498,15 +638,22 @@ ThriveInvoiceUtil.GetWorkRoleRateForCompany = function(workRoleId, companyId) {
 	}
 };
 
-ThriveInvoiceUtil.GetWorkRoleRateDefault = function(workRoleId) {
+ThriveInvoiceUtil.GetWorkRoleRateDefault = function(rateTypeId) {
 	var wr = new GlideRecord('fm_labor_rate_card');
-	wr.get(workRoleId);
-	return wr.hourly_rate;
+	wr.addQuery('rate_type', rateTypeId);
+	wr.addQuery('active', true);
+	wr.addQuery('x_175353_thriveinv_default', true);
+	wr.query();
+
+	if(wr.next()) {
+		return wr.hourly_rate;
+	}
 };
 
-ThriveInvoiceUtil.GetWorkTypeForProject = function(workTypeId, projectId) {
-	var wt = new GlideRecord('x_175353_thriveinv_work_type_overrides');
-	wt.addQuery('overridden_work_type', workTypeId);
+ThriveInvoiceUtil.GetWorkTypeForProject = function(rateAdjTypeId, projectId) {
+	var wt = new GlideRecord('x_175353_thriveinv_work_types');
+	wt.addQuery('rate_adjustment_type', rateAdjTypeId);
+	wt.addQuery('active', true);
 	wt.addQuery('project', projectId);
 	wt.query();
 
@@ -515,9 +662,22 @@ ThriveInvoiceUtil.GetWorkTypeForProject = function(workTypeId, projectId) {
 	}
 };
 
-ThriveInvoiceUtil.GetWorkTypeForCompany = function(workTypeId, companyId) {
-	var wt = new GlideRecord('x_175353_thriveinv_work_type_overrides');
-	wt.addQuery('overridden_work_type', workTypeId);
+ThriveInvoiceUtil.GetWorkTypeForContract = function(rateAdjTypeId, contractId) {
+	var wt = new GlideRecord('x_175353_thriveinv_work_types');
+	wt.addQuery('rate_adjustment_type', rateAdjTypeId);
+	wt.addQuery('active', true);
+	wt.addQuery('contract', contractId);
+	wt.query();
+
+	if(wt.next()) {
+		return wt;
+	}
+};
+
+ThriveInvoiceUtil.GetWorkTypeForCompany = function(rateAdjTypeId, companyId) {
+	var wt = new GlideRecord('x_175353_thriveinv_work_types');
+	wt.addQuery('rate_adjustment_type', rateAdjTypeId);
+	wt.addQuery('active', true);
 	wt.addQuery('company', companyId);
 	wt.addQuery('contract', null);
 	wt.addQuery('project', null);
@@ -528,10 +688,16 @@ ThriveInvoiceUtil.GetWorkTypeForCompany = function(workTypeId, companyId) {
 	}
 };
 
-ThriveInvoiceUtil.GetWorkTypeDefault = function(workTypeId) {
+ThriveInvoiceUtil.GetWorkTypeDefault = function(rateAdjTypeId) {
 	var wt = new GlideRecord('x_175353_thriveinv_work_types');
-	wt.get(workTypeId);
-	return wt;
+	wt.addQuery('rate_adjustment_type', rateAdjTypeId);
+	wt.addQuery('active', true);
+	wt.addQuery('default', true);
+	wt.query();
+
+	if(wt.next()) {
+		return wt;
+	}
 };
 
 function PerfectRound(num, places) {
@@ -558,13 +724,13 @@ function GetBOM(date, offset) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-13 19:35:01</sys_created_on>
         <sys_id>ce2ab99f4fb313002e7e8020a310c743</sys_id>
-        <sys_mod_count>371</sys_mod_count>
+        <sys_mod_count>420</sys_mod_count>
         <sys_name>ThriveInvoiceUtil</sys_name>
         <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_script_include_ce2ab99f4fb313002e7e8020a310c743</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-10-17 14:52:32</sys_updated_on>
+        <sys_updated_on>2018-11-13 05:57:46</sys_updated_on>
     </sys_script_include>
 </record_update>

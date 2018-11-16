@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element label="Invoices" max_length="40" name="x_175353_thriveinv_invoices" type="collection">
-        <element label="Manual Entry Total" max_length="20" name="adjustment_total" read_only="true" type="currency"/>
-        <element dependent="customer" dependent_on_field="customer" label="Billing Location" max_length="32" name="billing_location" read_only="true" reference="cmn_location" type="reference" use_dependent_field="true"/>
+        <element label="Manual Adjustments" max_length="20" name="adjustment_total" read_only="true" type="currency"/>
+        <element dependent="customer" dependent_on_field="customer" label="Billing Location" mandatory="true" max_length="32" name="billing_location" reference="cmn_location" type="reference" use_dependent_field="true"/>
         <element label="Customer" mandatory="true" max_length="32" name="customer" reference="customer_account" reference_qual="sys_domain!=global^EQ" reference_qual_condition="sys_domain!=global^EQ" type="reference"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Discounts" max_length="20" name="discounts_total" read_only="true" type="currency"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Fees" max_length="20" name="fees_total" read_only="true" type="currency"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="GP Sent" max_length="40" name="gp_sent" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="GP Sent Date" max_length="40" name="gp_sent_date" type="glide_date_time"/>
         <element label="Include Prorated Deprovisions" max_length="40" name="include_prorated_deprovisions" type="boolean"/>
         <element label="Include Prorated Provisions" max_length="40" name="include_prorated_provisions" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" default="true" label="Include Tax Fee" max_length="40" name="include_tax_fee" read_only="true" type="boolean"/>
         <element default="javascript: new GlideDate(). getDisplayValueInternal();" label="Invoice Date" mandatory="true" max_length="40" name="invoice_date" type="glide_date"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#9;return parseFloat(current.tm_total) + parseFloat(current.projects_total) + parseFloat(current.mrr_total) + parseFloat(current.prorate_total) + parseFloat(current.adjustment_total) + parseFloat(current.fees_total) + parseFloat(current.discounts_total);&#13;&#10;})(current);" label="Invoice Total" max_length="20" name="invoice_total" read_only="true" type="currency" virtual="true"/>
         <element choice="1" label="Invoice Type" mandatory="true" max_length="40" name="invoice_type" type="choice">
             <choice>
                 <element inactive_on_update="false" label="MRR" sequence="1" value="MRR"/>
@@ -14,15 +20,24 @@
                 <element inactive_on_update="false" label="Project (not implemented)" sequence="4" value="project"/>
             </choice>
         </element>
-        <element label="MRR Total" max_length="20" name="mrr_total" read_only="true" type="currency"/>
+        <element label="Contracted Recurring" max_length="20" name="mrr_total" read_only="true" type="currency"/>
         <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
-        <element label="Override Defaults" max_length="40" name="override_defaults" type="boolean"/>
-        <element label="Prorate Total" max_length="20" name="prorate_total" read_only="true" type="currency"/>
-        <element dependent="customer" dependent_on_field="customer" label="Service Location" max_length="32" name="service_location" read_only="true" reference="cmn_location" type="reference" use_dependent_field="true"/>
+        <element label="Override Master Contract" max_length="40" name="override_defaults" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Projects" max_length="20" name="projects_total" read_only="true" type="currency"/>
+        <element label="Prorated Additions" max_length="20" name="prorate_total" read_only="true" type="currency"/>
+        <element dependent="customer" dependent_on_field="customer" label="Service Location" mandatory="true" max_length="32" name="service_location" reference="cmn_location" type="reference" use_dependent_field="true"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="3" default="draft" label="Status" mandatory="true" max_length="32" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Draft" sequence="1" value="draft"/>
+                <element inactive_on_update="false" label="Ready to QA" sequence="2" value="draftqa"/>
+                <element inactive_on_update="false" label="QA Approved" sequence="3" value="qaed"/>
+                <element inactive_on_update="false" label="Sent" sequence="4" value="sent"/>
+            </choice>
+        </element>
         <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
         <element label="Domain" max_length="32" name="sys_domain" type="domain_id"/>
         <element label="Domain Path" max_length="255" name="sys_domain_path" type="domain_path"/>
-        <element label="T&amp;M Total" max_length="20" name="tm_total" read_only="true" type="currency"/>
+        <element label="Overage" max_length="20" name="tm_total" read_only="true" type="currency"/>
         <index name="index">
             <element name="service_location"/>
         </index>

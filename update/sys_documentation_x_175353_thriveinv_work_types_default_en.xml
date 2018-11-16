@@ -10,8 +10,8 @@
             <plural>Defaults</plural>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-14 19:14:49</sys_created_on>
-            <sys_id>a04f36274f7353002e7e8020a310c7b6</sys_id>
+            <sys_created_on>2018-10-29 16:36:36</sys_created_on>
+            <sys_id>4ce3bdc44fa123002e7e8020a310c718</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>Default</sys_name>
             <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
@@ -19,7 +19,7 @@
             <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
             <sys_update_name>sys_documentation_x_175353_thriveinv_work_types_default_en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-14 19:14:49</sys_updated_on>
+            <sys_updated_on>2018-10-29 16:36:36</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

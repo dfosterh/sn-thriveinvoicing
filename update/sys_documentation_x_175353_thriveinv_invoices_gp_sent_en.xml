@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="project" label="Project" language="en" table="x_175353_thriveinv_work_type_overrides">
+    <sys_documentation element="gp_sent" label="GP Sent" language="en" table="x_175353_thriveinv_invoices">
         <sys_documentation action="INSERT_OR_UPDATE">
-            <element>project</element>
+            <element>gp_sent</element>
             <help/>
             <hint/>
-            <label>Project</label>
+            <label>GP Sent</label>
             <language>en</language>
-            <name>x_175353_thriveinv_work_type_overrides</name>
-            <plural>Projects</plural>
+            <name>x_175353_thriveinv_invoices</name>
+            <plural>GP Sents</plural>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-17 21:23:47</sys_created_on>
-            <sys_id>4f89fa644f4423002e7e8020a310c77e</sys_id>
+            <sys_created_on>2018-11-05 18:38:52</sys_created_on>
+            <sys_id>c3f21e1e4fa123002e7e8020a310c791</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_name>Project</sys_name>
+            <sys_name>GP Sent</sys_name>
             <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
             <sys_policy/>
             <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
-            <sys_update_name>sys_documentation_x_175353_thriveinv_work_type_overrides_project_en</sys_update_name>
+            <sys_update_name>sys_documentation_x_175353_thriveinv_invoices_gp_sent_en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-17 21:23:47</sys_updated_on>
+            <sys_updated_on>2018-11-05 18:38:52</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

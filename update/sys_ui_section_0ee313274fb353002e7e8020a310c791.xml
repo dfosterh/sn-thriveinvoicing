@@ -4,13 +4,13 @@
             <element>overridden_work_role</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-20 21:40:50</sys_created_on>
-            <sys_id>823a56214f4423002e7e8020a310c7b8</sys_id>
+            <sys_created_on>2018-10-26 17:44:22</sys_created_on>
+            <sys_id>2396ae474f9123002e7e8020a310c776</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_labor_rate_card_overrides" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">0ee313274fb353002e7e8020a310c791</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-20 21:40:50</sys_updated_on>
+            <sys_updated_on>2018-10-26 17:44:22</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -18,13 +18,13 @@
             <element>rate_code</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-20 21:40:50</sys_created_on>
-            <sys_id>0e3a56214f4423002e7e8020a310c7b8</sys_id>
+            <sys_created_on>2018-10-26 17:44:22</sys_created_on>
+            <sys_id>2f96ae474f9123002e7e8020a310c776</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_labor_rate_card_overrides" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">0ee313274fb353002e7e8020a310c791</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-20 21:40:50</sys_updated_on>
+            <sys_updated_on>2018-10-26 17:44:22</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -32,97 +32,139 @@
             <element>rate_type</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-20 21:40:50</sys_created_on>
-            <sys_id>8e3a56214f4423002e7e8020a310c7b8</sys_id>
+            <sys_created_on>2018-10-26 17:44:22</sys_created_on>
+            <sys_id>af96ae474f9123002e7e8020a310c776</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_labor_rate_card_overrides" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">0ee313274fb353002e7e8020a310c791</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-20 21:40:50</sys_updated_on>
+            <sys_updated_on>2018-10-26 17:44:22</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>company</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-26 17:44:22</sys_created_on>
+            <sys_id>2396ae474f9123002e7e8020a310c777</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_labor_rate_card_overrides" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">0ee313274fb353002e7e8020a310c791</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-26 17:44:22</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>contract</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-26 17:44:22</sys_created_on>
+            <sys_id>a396ae474f9123002e7e8020a310c777</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_labor_rate_card_overrides" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">0ee313274fb353002e7e8020a310c791</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-26 17:44:22</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>project</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-26 17:44:22</sys_created_on>
+            <sys_id>2796ae474f9123002e7e8020a310c777</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_labor_rate_card_overrides" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">0ee313274fb353002e7e8020a310c791</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-26 17:44:22</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.split</element>
-            <position>3</position>
+            <position>6</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-20 21:40:50</sys_created_on>
-            <sys_id>023a56214f4423002e7e8020a310c7b9</sys_id>
+            <sys_created_on>2018-10-26 17:44:22</sys_created_on>
+            <sys_id>a796ae474f9123002e7e8020a310c777</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_labor_rate_card_overrides" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">0ee313274fb353002e7e8020a310c791</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-20 21:40:50</sys_updated_on>
+            <sys_updated_on>2018-10-26 17:44:22</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>name</element>
-            <position>4</position>
+            <position>7</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-20 21:40:50</sys_created_on>
-            <sys_id>823a56214f4423002e7e8020a310c7b9</sys_id>
+            <sys_created_on>2018-10-26 17:44:22</sys_created_on>
+            <sys_id>2b96ae474f9123002e7e8020a310c777</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_labor_rate_card_overrides" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">0ee313274fb353002e7e8020a310c791</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-20 21:40:50</sys_updated_on>
+            <sys_updated_on>2018-10-26 17:44:22</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>active</element>
-            <position>5</position>
+            <position>8</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-20 21:40:50</sys_created_on>
-            <sys_id>063a56214f4423002e7e8020a310c7b9</sys_id>
+            <sys_created_on>2018-10-26 17:44:22</sys_created_on>
+            <sys_id>ab96ae474f9123002e7e8020a310c777</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_labor_rate_card_overrides" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">0ee313274fb353002e7e8020a310c791</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-20 21:40:50</sys_updated_on>
+            <sys_updated_on>2018-10-26 17:44:22</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.end_split</element>
-            <position>6</position>
+            <position>9</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-20 21:40:50</sys_created_on>
-            <sys_id>863a56214f4423002e7e8020a310c7b9</sys_id>
+            <sys_created_on>2018-10-26 17:44:22</sys_created_on>
+            <sys_id>2f96ae474f9123002e7e8020a310c777</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_labor_rate_card_overrides" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">0ee313274fb353002e7e8020a310c791</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-20 21:40:50</sys_updated_on>
+            <sys_updated_on>2018-10-26 17:44:22</sys_updated_on>
             <sys_user/>
             <type>.end_split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>short_description</element>
-            <position>7</position>
+            <position>10</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-20 21:40:50</sys_created_on>
-            <sys_id>0a3a56214f4423002e7e8020a310c7b9</sys_id>
+            <sys_created_on>2018-10-26 17:44:22</sys_created_on>
+            <sys_id>af96ae474f9123002e7e8020a310c777</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_labor_rate_card_overrides" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">0ee313274fb353002e7e8020a310c791</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-20 21:40:50</sys_updated_on>
+            <sys_updated_on>2018-10-26 17:44:22</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>hourly_rate</element>
-            <position>8</position>
+            <position>11</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2018-08-20 21:40:50</sys_created_on>
-            <sys_id>8a3a56214f4423002e7e8020a310c7b9</sys_id>
+            <sys_created_on>2018-10-26 17:44:22</sys_created_on>
+            <sys_id>2396ae474f9123002e7e8020a310c778</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_175353_thriveinv_labor_rate_card_overrides" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="Default view">0ee313274fb353002e7e8020a310c791</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-08-20 21:40:50</sys_updated_on>
+            <sys_updated_on>2018-10-26 17:44:22</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element label="Work Types" max_length="40" name="x_175353_thriveinv_work_types" type="collection">
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Account" max_length="32" name="account" reference="customer_account" type="reference"/>
         <element label="Accrual Type" max_length="30" name="accrual_type" type="string"/>
         <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
-        <element label="Default" max_length="40" name="default" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Contract" max_length="32" name="contract" reference="ast_service" reference_qual="javascript: &quot;account=&quot;+current.account;" type="reference" use_reference_qualifier="advanced"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" default="true" label="Default" max_length="40" name="default" type="boolean"/>
         <element label="For Utilization" max_length="40" name="for_utilization" type="boolean"/>
         <element label="Maximum Hours" max_length="15" name="maximum_hours" type="decimal"/>
         <element label="Minimum Hours" max_length="15" name="minimum_hours" type="decimal"/>
-        <element display="true" label="Name" mandatory="true" max_length="100" name="name" type="string"/>
         <element label="Price Adjustment" mandatory="true" max_length="15" name="price_adjustment" type="decimal"/>
         <element choice="3" label="Price Adjustment Type" mandatory="true" max_length="30" name="price_adjustment_type" type="string">
             <choice>
@@ -15,9 +16,25 @@
                 <element inactive_on_update="false" label="Override" value="override"/>
             </choice>
         </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Project" max_length="32" name="project" reference="pm_project" reference_qual="javascript: &quot;account=&quot;+current.account;" type="reference" use_reference_qualifier="advanced"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Rate Adjustment Type" mandatory="true" max_length="32" name="rate_adjustment_type" reference="x_175353_thriveinv_rate_adjustment_type" type="reference">
+            <choice/>
+        </element>
         <element label="Round To Minutes" max_length="2" name="round_to_minutes" type="integer"/>
         <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
         <index name="index">
+            <element name="contract"/>
+        </index>
+        <index name="index2">
+            <element name="project"/>
+        </index>
+        <index name="index3">
+            <element name="rate_adjustment_type"/>
+        </index>
+        <index name="index4">
+            <element name="account"/>
+        </index>
+        <index name="index5">
             <element name="sys_class_name"/>
         </index>
     </element>

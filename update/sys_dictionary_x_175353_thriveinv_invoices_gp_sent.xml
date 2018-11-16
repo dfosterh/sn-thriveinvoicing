@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_dictionary action="INSERT_OR_UPDATE" element="project" table="x_175353_thriveinv_work_type_overrides">
+    <sys_dictionary action="INSERT_OR_UPDATE" element="gp_sent" table="x_175353_thriveinv_invoices">
         <active>true</active>
         <array>false</array>
         <array_denormalized>false</array_denormalized>
@@ -14,33 +14,33 @@
         <choice/>
         <choice_field/>
         <choice_table/>
-        <column_label>Project</column_label>
+        <column_label>GP Sent</column_label>
         <comments/>
         <create_roles/>
         <default_value/>
         <defaultsort/>
         <delete_roles/>
-        <dependent>company</dependent>
-        <dependent_on_field>company</dependent_on_field>
+        <dependent/>
+        <dependent_on_field/>
         <display>false</display>
         <dynamic_creation>false</dynamic_creation>
         <dynamic_creation_script/>
         <dynamic_default_value/>
         <dynamic_ref_qual/>
-        <element>project</element>
+        <element>gp_sent</element>
         <element_reference>false</element_reference>
         <foreign_database/>
         <function_definition/>
         <function_field>false</function_field>
-        <internal_type display_value="Reference">reference</internal_type>
+        <internal_type display_value="">boolean</internal_type>
         <mandatory>false</mandatory>
-        <max_length>32</max_length>
-        <name>x_175353_thriveinv_work_type_overrides</name>
+        <max_length>40</max_length>
+        <name>x_175353_thriveinv_invoices</name>
         <next_element/>
         <primary>false</primary>
         <read_only>false</read_only>
         <read_roles/>
-        <reference display_value="" name="pm_project">pm_project</reference>
+        <reference/>
         <reference_cascade_rule/>
         <reference_floats>false</reference_floats>
         <reference_key/>
@@ -52,20 +52,20 @@
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2018-08-17 21:23:47</sys_created_on>
-        <sys_id>64b760264f5563002e7e8020a310c7f9</sys_id>
+        <sys_created_on>2018-11-05 18:38:52</sys_created_on>
+        <sys_id>e5d29a1e4fa123002e7e8020a310c785</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name>Project</sys_name>
+        <sys_name>GP Sent</sys_name>
         <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
         <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
-        <sys_update_name>sys_dictionary_x_175353_thriveinv_work_type_overrides_project</sys_update_name>
-        <sys_updated_by>system</sys_updated_by>
-        <sys_updated_on>2018-10-24 19:13:35</sys_updated_on>
+        <sys_update_name>sys_dictionary_x_175353_thriveinv_invoices_gp_sent</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-11-05 18:38:52</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
-        <use_dependent_field>true</use_dependent_field>
+        <use_dependent_field>false</use_dependent_field>
         <use_dynamic_default>false</use_dynamic_default>
         <use_reference_qualifier>simple</use_reference_qualifier>
         <virtual>false</virtual>

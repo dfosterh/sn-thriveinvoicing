@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="override_defaults" label="Override Defaults" language="en" table="x_175353_thriveinv_invoices">
+    <sys_documentation element="override_defaults" label="Override Master Contract" language="en" table="x_175353_thriveinv_invoices">
         <sys_documentation action="INSERT_OR_UPDATE">
             <element>override_defaults</element>
             <help/>
             <hint/>
-            <label>Override Defaults</label>
+            <label>Override Master Contract</label>
             <language>en</language>
             <name>x_175353_thriveinv_invoices</name>
-            <plural>Override Defaults</plural>
+            <plural>Override Master Contracts</plural>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2018-10-09 18:29:19</sys_created_on>
             <sys_id>54ed0b254f8163002e7e8020a310c7a3</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_name>Override Defaults</sys_name>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_name>Override Master Contract</sys_name>
             <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
             <sys_policy/>
             <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
             <sys_update_name>sys_documentation_x_175353_thriveinv_invoices_override_defaults_en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-10-09 18:29:19</sys_updated_on>
+            <sys_updated_on>2018-11-05 20:43:24</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

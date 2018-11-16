@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="fm_rate_card" label="Labor Rate Card" max_length="40" name="fm_labor_rate_card" type="collection">
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Account" max_length="32" name="x_175353_thriveinv_account" reference="customer_account" reference_cascade_rule="delete" type="reference"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Contract" max_length="32" name="x_175353_thriveinv_contract" reference="ast_service" reference_cascade_rule="delete" reference_qual="javascript: &quot;account=&quot;+current.x_175353_thriveinv_account;" type="reference" use_reference_qualifier="advanced"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" default="true" label="Default" max_length="40" name="x_175353_thriveinv_default" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Project" max_length="32" name="x_175353_thriveinv_project" reference="pm_project" reference_cascade_rule="delete" reference_qual="javascript: &quot;company=&quot;+current.x_175353_thriveinv_account;" type="reference" use_reference_qualifier="advanced"/>
+        <index name="index">
+            <element name="x_175353_thriveinv_project"/>
+        </index>
+        <index name="index2">
+            <element name="x_175353_thriveinv_account"/>
+        </index>
+        <index name="index3">
+            <element name="x_175353_thriveinv_contract"/>
+        </index>
+    </element>
+</database>

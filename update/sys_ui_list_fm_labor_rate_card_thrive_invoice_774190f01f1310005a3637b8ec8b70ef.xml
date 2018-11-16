@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="774190f01f1310005a3637b8ec8b70ef" table="fm_labor_rate_card" version="2" view="Thrive_Invoice">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>hourly_rate</element>
+            <list_id display_value="fm_labor_rate_card" element="NULL" name="fm_labor_rate_card" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="d07be68b4f9123002e7e8020a310c7e5">994d1ac44f2523002e7e8020a310c74a</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-29 19:37:28</sys_created_on>
+            <sys_id>594d1ac44f2523002e7e8020a310c74b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-29 19:37:28</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>rate_type</element>
+            <list_id display_value="fm_labor_rate_card" element="NULL" name="fm_labor_rate_card" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="d07be68b4f9123002e7e8020a310c7e5">994d1ac44f2523002e7e8020a310c74a</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-29 19:37:28</sys_created_on>
+            <sys_id>d14d1ac44f2523002e7e8020a310c74c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-29 19:37:28</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>x_175353_thriveinv_account</element>
+            <list_id display_value="fm_labor_rate_card" element="NULL" name="fm_labor_rate_card" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="d07be68b4f9123002e7e8020a310c7e5">994d1ac44f2523002e7e8020a310c74a</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-29 19:37:28</sys_created_on>
+            <sys_id>554d1ac44f2523002e7e8020a310c74c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-29 19:37:28</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>x_175353_thriveinv_contract</element>
+            <list_id display_value="fm_labor_rate_card" element="NULL" name="fm_labor_rate_card" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="d07be68b4f9123002e7e8020a310c7e5">994d1ac44f2523002e7e8020a310c74a</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-29 19:37:28</sys_created_on>
+            <sys_id>9d4d1ac44f2523002e7e8020a310c758</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-29 19:37:28</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>x_175353_thriveinv_project</element>
+            <list_id display_value="fm_labor_rate_card" element="NULL" name="fm_labor_rate_card" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="d07be68b4f9123002e7e8020a310c7e5">994d1ac44f2523002e7e8020a310c74a</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-29 19:37:28</sys_created_on>
+            <sys_id>114d1ac44f2523002e7e8020a310c759</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-29 19:37:28</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>x_175353_thriveinv_default</element>
+            <list_id display_value="fm_labor_rate_card" element="NULL" name="fm_labor_rate_card" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="d07be68b4f9123002e7e8020a310c7e5">994d1ac44f2523002e7e8020a310c74a</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-29 19:37:28</sys_created_on>
+            <sys_id>914d1ac44f2523002e7e8020a310c759</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-29 19:37:28</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>active</element>
+            <list_id display_value="fm_labor_rate_card" element="NULL" name="fm_labor_rate_card" parent="NULL" relationship="NULL" sys_domain="774190f01f1310005a3637b8ec8b70ef" view="d07be68b4f9123002e7e8020a310c7e5">994d1ac44f2523002e7e8020a310c74a</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>6</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-29 19:37:28</sys_created_on>
+            <sys_id>154d1ac44f2523002e7e8020a310c759</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-29 19:37:28</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>fm_labor_rate_card</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-29 19:37:27</sys_created_on>
+            <sys_domain>774190f01f1310005a3637b8ec8b70ef</sys_domain>
+            <sys_domain_path>!!!/</sys_domain_path>
+            <sys_id>994d1ac44f2523002e7e8020a310c74a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>fm_labor_rate_card</sys_name>
+            <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
+            <sys_update_name>sys_ui_list_fm_labor_rate_card_Thrive_Invoice_774190f01f1310005a3637b8ec8b70ef</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-29 19:37:27</sys_updated_on>
+            <sys_user/>
+            <view display_value="Thrive Invoice" name="Thrive_Invoice">d07be68b4f9123002e7e8020a310c7e5</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

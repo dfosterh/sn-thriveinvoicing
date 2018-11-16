@@ -8,10 +8,10 @@
         <element label="Has Billing Issue" max_length="40" name="x_175353_thriveinv_has_billing_issue" read_only="true" type="boolean"/>
         <element label="Invoice" max_length="32" name="x_175353_thriveinv_invoice" read_only="true" reference="x_175353_thriveinv_invoices" type="reference"/>
         <element label="Rack Rate" max_length="15" name="x_175353_thriveinv_rack_rate" read_only="true" type="decimal"/>
-        <element choice="1" label="Work Role" max_length="32" name="x_175353_thriveinv_work_role" reference="fm_labor_rate_card" type="reference">
+        <element choice="1" label="Work Role" max_length="32" name="x_175353_thriveinv_work_role" reference="rate_type" type="reference">
             <choice/>
         </element>
-        <element choice="1" label="Work Type" max_length="32" name="x_175353_thriveinv_work_type" reference="x_175353_thriveinv_work_types" reference_qual="sys_class_name=x_175353_thriveinv_work_types^EQ" reference_qual_condition="sys_class_name=x_175353_thriveinv_work_types^EQ" type="reference">
+        <element choice="1" label="Work Type" max_length="32" name="x_175353_thriveinv_work_type" reference="x_175353_thriveinv_rate_adjustment_type" type="reference">
             <choice/>
         </element>
         <index name="index">

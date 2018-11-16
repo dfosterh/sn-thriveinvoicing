@@ -104,8 +104,15 @@ catch(ex) {
 function genInvoices(invoiceType, invoiceDate, recalcAll) {
 	try {
 		if (invoiceType.length > 0) {
-			var customers = new GlideRecord('customer_account');
-			customers.addQuery('customer', true);
+//			var customers = new GlideRecord('customer_account');
+//			customers.addQuery('customer', true);
+			var customers = new GlideAggregate('ast_service');
+			customers.addQuery('state', 'Active');
+			customers.addQuery('account.active', true);
+			customers.groupBy('account');
+			customers.groupBy('location');
+			customers.groupBy('x_175353_contracts_service_location');
+			customers.setGroup(true);
 			customers.query();
 			//and by all Service Locations in contracts (implies that non-covered T&M will be against a contract)
 
@@ -114,14 +121,16 @@ function genInvoices(invoiceType, invoiceDate, recalcAll) {
 			while(customers.next()) {
 				var invoice = new GlideRecord('x_175353_thriveinv_invoices');
 				invoice.addQuery('invoice_type', invoiceType);
-				invoice.addQuery('customer', customers.sys_id);
+				invoice.addQuery('customer', customers.account.sys_id);
 				invoice.addQuery('invoice_date', invoiceDate);
 				invoice.query();
 
 				if(!invoice.next()) {
 					var newInvoice = new GlideRecord('x_175353_thriveinv_invoices');
 					newInvoice.initialize();
-					newInvoice.customer = customers.sys_id;
+					newInvoice.customer = customers.account;
+					newInvoice.billing_location = customers.location;
+					newInvoice.service_location = customers.x_175353_contracts_service_location;
 					newInvoice.invoice_type = invoiceType;
 					newInvoice.invoice_date = invoiceDate;
 					newInvoice.insert();
@@ -146,13 +155,13 @@ function genInvoices(invoiceType, invoiceDate, recalcAll) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-22 16:27:59</sys_created_on>
         <sys_id>3f8aedf14f9123002e7e8020a310c70d</sys_id>
-        <sys_mod_count>76</sys_mod_count>
+        <sys_mod_count>82</sys_mod_count>
         <sys_name>invoice_bulk_dialog</sys_name>
         <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
         <sys_policy/>
         <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
         <sys_update_name>sys_ui_page_3f8aedf14f9123002e7e8020a310c70d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-10-24 15:31:19</sys_updated_on>
+        <sys_updated_on>2018-10-25 18:21:56</sys_updated_on>
     </sys_ui_page>
 </record_update>

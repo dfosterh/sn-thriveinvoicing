@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="mrr_total" label="MRR Total" language="en" table="x_175353_thriveinv_invoices">
+    <sys_documentation element="mrr_total" label="Contracted Recurring" language="en" table="x_175353_thriveinv_invoices">
         <sys_documentation action="INSERT_OR_UPDATE">
             <element>mrr_total</element>
             <help/>
             <hint/>
-            <label>MRR Total</label>
+            <label>Contracted Recurring</label>
             <language>en</language>
             <name>x_175353_thriveinv_invoices</name>
-            <plural>MRR Totals</plural>
+            <plural>Contracted Recurrings</plural>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2018-09-04 13:47:41</sys_created_on>
             <sys_id>d9cd359a4f1023002e7e8020a310c795</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_name>MRR Total</sys_name>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_name>Contracted Recurring</sys_name>
             <sys_package display_value="Thrive Invoices" source="x_175353_thriveinv">d742b9934f3313002e7e8020a310c7e3</sys_package>
             <sys_policy/>
             <sys_scope display_value="Thrive Invoices">d742b9934f3313002e7e8020a310c7e3</sys_scope>
             <sys_update_name>sys_documentation_x_175353_thriveinv_invoices_mrr_total_en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-09-04 13:47:41</sys_updated_on>
+            <sys_updated_on>2018-11-08 21:41:09</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>
